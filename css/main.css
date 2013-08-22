@@ -1,0 +1,354 @@
+.custom { /* has to be the first rule in here, because I do access it via JS[0] */
+}
+body {
+	margin: 0;
+	padding: 0;
+	/* Credit: Stephen Gilbert, http://subtlepatterns.com/textured-paper/ */
+	background-image: url("../images/textured_paper_3.png");
+	background-color: #444; /* 64/255 ~= 4/16 */
+	transition: background-color 400ms ease-in-out;
+}
+*:-webkit-full-screen {
+	 /* transparent. counters white background in fullscreen mode in chrome */
+	background-color: rgba(0,0,0,0);
+}
+@font-face {
+	/* IE: @font-face failed OpenType embedding permission check. Permission must be Installable. */
+	font-family: MySymbols; /* http://www.freefontconverter.com/ */
+	src: url("../vector/mySymbols9.ttf") format('truetype');
+}
+#title {
+	width: 100%;
+	top: 0;
+	background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+	
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
+	transition: opacity 400ms ease-in-out, max-height 1200ms ease-in-out 300ms;
+	overflow: hidden;
+}
+.logoInTitle {
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 30px; /* in the future, font-size should be relative to the browser window (using vh)*/
+    padding: 10px; /* top right bottom left*/
+	color: rgba(200, 200, 200, 1);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+}
+.menu {
+	transition: opacity 300ms ease-in-out;
+}
+.menu:hover {
+	opacity: 1 !important;
+}
+.menu ul {
+	position: fixed;
+	top: 0;
+	left: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+	z-index: 5;
+}
+.menu ul li {
+    position: relative;
+    display: block;
+	padding-right: 5px;
+    float: left;
+    white-space: nowrap;
+	cursor: pointer;
+	-moz-user-select: none;
+}
+.menu ul ul {
+	position: absolute;
+	top: 100%;
+	left: 0;
+    display: none;
+	box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.1);
+}
+.menu ul ul li {
+    float: none;
+	padding: 0 0 4px 0;
+	background: rgba(0, 0, 0, 0.7);
+	/*transition: box-shadow 100ms ease-in-out;*/
+}
+.menu li:hover {
+	background: rgba(0, 0, 0, 0.7);
+}
+.menu li:hover ul {
+    display: block;
+}
+.menu li li:hover {
+	/* h, v, blur, spread, colour, inset? */
+	box-shadow: 15px 0px 40px -15px rgba(255, 255, 255, 0.6) inset;
+}
+.menu li li:hover .desc, .menu li li:hover .symbol {
+	color: #ddd;
+}
+.menu li li:hover .key {
+	background: linear-gradient(to bottom, #C2C2C2, #EEE);
+}
+.symbol {
+	font-family: MySymbols;
+	text-shadow: 0px 1px 0 rgba(0, 0, 0, 0.25); /* horizontal, vertical, blur, color */
+	font-size: 30px;
+    text-decoration: none;
+    padding: 0 10px 0 10px;
+    color: #999;
+}
+.key {
+    border: medium none;
+    border-radius: 0.3em 0.3em 0.3em 0.3em;
+    display: inline-block;
+    font: 1em sans-serif;
+	font-weight: 900;
+    min-width: 1em;
+	margin: -5px 5px 5px 5px;
+    padding: 3px 4px;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+	background: linear-gradient(to bottom, #A2A2A2, #CCC);
+	color: #323232;
+	text-shadow: 0 0 2px #FFF;
+	border: medium none; /* width, style, color */
+	box-shadow: 0 0 1px #FFF inset, 0 0 0.4em #C8C8C8 inset, 0 0.1em 0 #666, 0 0.11em 0 rgba(255, 255, 255, 0.4), 0 0.1em 0.11em rgba(255, 255, 255, 0.9);
+}
+.desc {
+	font-family: sans-serif;
+	text-shadow: 0px 1px 0 rgba(0, 0, 0, 0.25); /* horizontal, vertical, blur, color */
+	font-size: 20px;
+	padding: 0 18px 0 10px;
+	cursor: pointer;
+    text-decoration: none;
+    color: #999;
+	/*transition: color 100ms ease-in-out;*/
+}
+.frame {
+	position: fixed;
+	/* this is to allow the pictures inside to be zoomed beyond the browser window borders
+	if this is changed, updateFillStyle() also needs to change */
+    height: 200%;
+    width: 200%;
+	top: -50%;
+	left: -50%;
+    text-align: center;
+	z-index: 3;
+}
+#overviewFrame { /* contains all previews */
+/* has some negative effects:
+window resize and zooming previews does not look as nice,
+fullscreen scrollbar remove shakes the overview,
+last line of previews in not aligned */
+	text-align: center;
+	width: 97%;
+	padding: 0 0 4% 0; /* top right bottom left */
+	margin: 1.5%; /* if changed, js also needs to change -> setPreviewSize()  */
+	transition: padding-top 200ms ease-in-out;
+}
+.previewPic {
+	/* disadvantage: will not scale UP images */
+	/* might be an alternative: background-size: contain */
+	max-width: 100%;
+	max-height: 100%;
+	vertical-align: middle;
+	border-radius: 2px;
+	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3);
+	transition: opacity 400ms ease-in-out, box-shadow 300ms ease-in-out;
+}
+.visited {
+	/*border-top-right-radius: 8px;*/
+}
+.previewPic:hover {
+	/*box-shadow: 3px 3px 8px 2px rgba(0,0,0,0.4);*/
+}
+.isCurrent {
+	box-shadow: 0px 1px 30px 4px rgba(255,255,255,0.6);
+}
+.helperSpanToAlignImageVertically {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.rawImage {
+	border-radius: 2px;
+	vertical-align: middle;
+	transition: opacity 400ms ease-in-out; /* this is done in JS (style): , width 100ms ease-in-out, height 100ms ease-in-out*/
+}
+.menuButtonClicked {
+	color: rgba(230, 230, 230, 1) !important;
+	box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
+	background-image: linear-gradient(#777 0%, #333 100%) !important;
+	transition: all 200ms ease-in-out;
+}
+/*.hideTitleButton {
+	position: fixed;
+	font-family: MySymbols;
+	font-size: 16px;
+	padding: 10px;
+	top: 2px;
+	right: 4px;
+	color: rgba(180, 180, 180, 1);
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+	cursor: pointer;
+	transition: transform 600ms ease-in-out, color 200ms ease-in-out;
+}
+.hideTitleButton:hover {
+	color: rgba(230, 230, 230, 1);
+}
+.hideTitleButtonReversed {
+	transform: rotate(180deg);
+	color: rgba(130, 130, 130, 1);
+}*/
+.imgContainerDiv {
+	text-align: center;
+	display: inline-block;
+	/*transition: all 400ms ease-in-out;*/
+	/*background-color: #fcc;*/
+}
+.movingImage {
+	position: fixed;
+	border-radius: 2px;
+	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3);
+	transition: opacity 400ms ease-in-out;
+	z-index: 3;
+}
+.hideScrollbar {
+	overflow: hidden;
+}
+.imageBGnShadow {
+	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3); /* horizontal, vertical, blur radius, spread radius */
+/*	box-shadow: 0px 7px 20px 3px rgba(0,0,0,0.2); */
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.logo {
+	position: fixed;
+	opacity: 0.13;
+	height: 3%;
+	bottom: .5%;
+	right: 1%;
+	transition: all 500ms ease-in-out;
+}
+.logo:hover {
+	opacity: 0.8;
+	right: 2%;
+}
+footer {
+	width: 100%;
+	/*display: table;*/
+	font-family: sans-serif;
+	font-size: 120%;
+	font-weight: 100;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	color: rgba(150, 150, 150, 1);
+	text-align: center;
+	bottom: 0;
+	/* Credit: ESO/S. Brunier, http://www.eso.org/public/germany/images/eso0932a/ */
+	background-image: url("../images/eso0932a_050.jpg");
+	background-size: cover;
+	background-position: center;
+	background-color: rgba(0, 0, 0, 0.2);
+	/*border-top: solid 2px rgba(0, 0, 0, 0.3);*/
+	box-shadow: 0px 20px 20px -10px rgba(0,0,0,0.5) inset;
+	transition: opacity 400ms ease-in-out;
+}
+footer div {
+	display: inline-block;
+	padding: 3% 4%;
+	max-width: 250px;
+	vertical-align: top;
+	text-align: left;
+}
+footer a {
+	border: 0;
+	text-decoration: none;
+	color: rgba(150, 150, 150, 1);
+}
+footer img {
+	opacity: 0.4;
+	padding: 3px 0;
+	transition: opacity 300ms ease-in-out;
+}
+#ccLogo {
+	height: 2em;
+}
+#fotofirmamentLogo {
+	width: 100%;
+}
+#ccLogo:hover, #fotofirmamentLogo:hover {
+	opacity: 0.7;
+}
+noscript, #errorMessages {
+	position: fixed;
+	width: 100%;
+	background-color: #800;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	color: #fff;
+	padding: 5px;
+	font-size: 20px;
+	text-align: center;
+	z-index: 6;
+	cursor: pointer;
+}
+#loadingCircle {
+	position: fixed;
+	width: 6%;
+	pointer-events: none; /* clicks will fall through the element */
+	bottom: 8%;
+	left: 47%;
+	z-index: 5;
+	transition: opacity 300ms ease-in-out;
+	-webkit-animation: spin 1s infinite linear;
+	/* http://www.w3.org/TR/css3-animations/#animation-shorthand-property */
+	animation: spin 1s infinite linear;
+}
+/* chromium doesnt seem to support the default yet */
+@-webkit-keyframes spin {
+	0% {	-webkit-transform: rotate(0deg); }
+	100% {	-webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+	0% {	transform: rotate(0deg); }
+	100% {	transform: rotate(360deg); }
+}
+.changeImageButton {
+	position: fixed;
+	cursor: pointer;
+	padding: 2%; /* for a large click-zone */
+/*	background-color: #555;*/
+	width: 2%;
+	top: 47%;
+	transition: opacity 300ms ease-in-out, left 250ms ease-in-out, right 250ms ease-in-out;
+}
+.changeImageButton:hover {
+	opacity: 1 !important;
+	display: block !important;
+}
+#previous {
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+	right: -1.2%;
+}
+#previous:hover {
+	right: -1.5%;
+}
+#next {
+	left: -1.2%;
+}
+#next:hover {
+	left: -1.5%;
+}
+.opacity_CIB { opacity: 0.2; }
+/*.CIB_opacity:hover { opacity: 1; }*/
+.opacity0 { opacity: 0.0; }
+.opacity1 { opacity: 1.0; }
+.opacity0_noTransition { opacity: 0.0; transition: box-shadow 300ms ease-in-out !important; }
+.opacity1_noTransition { opacity: 1.0; transition: box-shadow 300ms ease-in-out !important; }
+.hidden { display: none; }
+.hideCursor { cursor: none; }
+.z0 { z-index: 0; }
+.z1 { z-index: 1; }
+.z2 { z-index: 2; }
+.z3 { z-index: 3; }
+.z4 { z-index: 4; }
