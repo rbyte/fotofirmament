@@ -141,6 +141,7 @@ last line of previews in not aligned */
 	border-radius: 2px;
 	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3);
 	transition: opacity 400ms ease-in-out, box-shadow 300ms ease-in-out;
+	cursor: pointer;
 }
 .previewPic:hover {
 	/*box-shadow: 3px 3px 8px 2px rgba(0,0,0,0.4);*/
