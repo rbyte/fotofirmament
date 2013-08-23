@@ -1,4 +1,7 @@
-<?php include_once "locale.php";?>
+<?php
+include_once "config.php";
+include_once "locale.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>

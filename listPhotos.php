@@ -1,9 +1,4 @@
 <?php
-$pathToPhotos = "images/photosFullsize/";
-// if there are no previews, you can set pathToPreviews = pathToPhotos
-// preview and fullsize version have the same file name!
-//	$pathToPreviews = $pathToPhotos;
-$pathToPreviews = "images/photosPreview/";
 echo 'pathToPhotos = "'.$pathToPhotos."\"\n";
 echo 'pathToPreviews = "'.$pathToPreviews."\"\n";
 $verz = dirname($_SERVER['SCRIPT_FILENAME'])."/".$pathToPhotos;
