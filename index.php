@@ -14,11 +14,6 @@ include_once "locale.php";
 	
 	<script><?php include_once "listPhotos.php"; ?></script>
 	<script type='text/javascript' src='js/fotofirmament.js'></script>
-	<script>
-function openTitle() {
-	fotofirmament.addOrReplaceClassAttr("title", "titleOpen")
-}
-	</script>
 </head>
 
 <body onload="interfaceInit()">
@@ -43,9 +38,8 @@ function openTitle() {
 	</ul>
 	</div>
 	
-	<header id="title" class="opacity0" onclick="openTitle()">
-		<!-- to be defined -->
-		<div class="logoInTitle">Matthias <span>Foto</span>Graf</div>
+	<header id="title" class="opacity0">
+		<div class="logoInTitle" onclick="fotofirmament.switchClassAttr('title', 'titleOpen')">Matthias <span>Foto</span>Graf</div>
 		<div class="hr"></div>
 		<div class="info">
 			<h3><?php echo _("Welcome!"); ?></h3>
