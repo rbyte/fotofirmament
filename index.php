@@ -14,6 +14,11 @@ include_once "locale.php";
 	
 	<script><?php include_once "listPhotos.php"; ?></script>
 	<script type='text/javascript' src='js/fotofirmament.js'></script>
+	<script>
+function openTitle() {
+	fotofirmament.addOrReplaceClassAttr("title", "titleOpen")
+}
+	</script>
 </head>
 
 <body onload="interfaceInit()">
@@ -38,7 +43,7 @@ include_once "locale.php";
 	</ul>
 	</div>
 	
-	<header id="title" class="opacity0">
+	<header id="title" class="opacity0" onclick="openTitle()">
 		<!-- to be defined -->
 		<div class="logoInTitle">Matthias <span>Foto</span>Graf</div>
 		<div class="hr"></div>
@@ -51,7 +56,10 @@ include_once "locale.php";
 			</p>
 			<p><?php echo _("I would like to dearly thank all the people that went with me part of the way and encouraged me to take it further. Thank you for your appreciation, recommendations, critique and support!"); ?>
 			</p>
-			<p><?php echo _("I currently live in Magdeburg, where I am studying computer science. Feel free to contact me via Email: "); ?><span>matthias.graf@eclasca.de</span>
+			<p><?php echo _("I currently live in Magdeburg, where I am studying computer science. Feel free to contact me via Email: "); 
+			$myEmail = "matthias.<b></b>graf&#064;eclasca.de";
+			?>
+			<span><?php echo $myEmail; ?></span>
 			</p>
 			<p><?php echo _("Have fun exploring the gallery!"); ?>
 			</p>
@@ -70,7 +78,7 @@ include_once "locale.php";
 			<br/>Matthias Graf
 			<br/>
 			<br/><strong><?php echo _("Contact:"); ?></strong>
-			<br/><a href="mailto:matthias.graf@eclasca.de">matthias.graf@eclasca.de</a>
+			<br/><?php echo $myEmail; ?></a>
 		</div>
 		<div>
 			<strong><?php echo _("Photo license:"); ?></strong>

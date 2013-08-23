@@ -15,7 +15,8 @@
 	transition: opacity 400ms ease-in-out, max-height 1200ms ease-in-out 300ms;
 	overflow: hidden;
 }
-#title:hover {
+/*#title:hover {*/
+.titleOpen {
 	max-height: 4000px; /* just as big as it will never get */
 }
 .logoInTitle {
