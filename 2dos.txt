@@ -1,0 +1,18 @@
+
+optimise for huge galeries -> paged/ondemand preview loading
+show Exif info
+when the overview is still loading, and an image is opened to fullsize, it cannot be closed by mouse until loading ended
+when the previews are still loading, they block fullsize loading (set up priority queue?)
+improve cross-browser compatibility (ie?)
+NoScript version (via PHP)
+add custom text feature for photos
+sort by Exif date
+stick footer to page bottom (even if the page is not filled)
+PHP auto image preview generation
+next and previous buttons: hide when at first or last photo
+further localisation (es, fr, ru, ...)
+add language selection menu
+optimise for printing
+download all function
+optional captcha protection (?)
+maybe try a prototypal implementation of Photo
