@@ -10,25 +10,34 @@ This is a my customised instance of the fotofirmament.
 
 Key features:
 -calm interface experience through
-  -smooth transitions for UI elements and photos
   -unobtrusive, modest design
+  -smooth transitions of UI elements and pictures
   -well structured panels and overview
--responsive design
--intuitive usability
--preloading images
+-responsive webdesign
+-ease to use
+-preloading of fullsize pictures
 -localisation support
--lightweight
--no paging
--direct linking to photos
 -high quality interface graphics
--no third party library dependence
--zoom for overview and fullsize photos
+-zoom for overview and pictures
+-supports direct linking to pictures
 -fullscreen capable
 -keyboard-only usage possible
--free software
+-lightweight
+-no third party library dependence
 -easily customisable
 -simple setup
+-free software
 
+Setup:
+-clone this repository
+-open ./index.php in your webbrowser
+  -you should see the sample images
+-place all your images inside ./images/photosFullsize/
+-place all your preview-images (with the same name) inside ./images/photosPreviews/
+-remove the sample images inside those folders
+-reload the page and see your images appear!
+
+If you do not have a webserver set up, you can also open ./index_evaluatedExample.htm in your browser.
 
 
 
