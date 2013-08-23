@@ -7,7 +7,7 @@ include_once "locale.php";
 <head>
 	<meta charset="utf-8">
 	<title>FotoGraf</title>
-	<!--<link rel="icon" href="images/favicon.png" type="image/png"/>-->
+	<link rel="icon" href="fotograf/favicon.png" type="image/png"/>
 	<!-- needs to be the first css! see getCustomStyleCSSRule() -->
 	<link rel="stylesheet" type="text/css" href="css/fotofirmament.css"/>
 	<link rel="stylesheet" type="text/css" href="css/custom.css"/>

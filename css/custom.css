@@ -26,6 +26,7 @@
 	color: rgba(90, 90, 90, 1);
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), 1px 1px 0px rgba(255, 255, 255, 0.6);
 	cursor: pointer;
+	white-space: nowrap; /* because the header size is fixed */
 }
 .logoInTitle:after {
 	content: 's';
