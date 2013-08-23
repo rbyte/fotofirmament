@@ -40,7 +40,22 @@ include_once "locale.php";
 	
 	<header id="title" class="opacity0">
 		<!-- to be defined -->
-<!--		<div class="logoInTitle"><?php echo _("fotofirmament showcase gallery"); ?></div>-->
+		<div class="logoInTitle">Matthias <span>Foto</span>Graf</div>
+		<div class="hr"></div>
+		<div class="info">
+			<h3><?php echo _("Welcome!"); ?></h3>
+			<img src="<?php echo $pathToPreviews; ?>27306.jpg"/>
+			<p><?php echo _("Here you will find some of my finest photos. The latest are at the top, the oldest were shot in 2007. In this year, after my final school exams (Abitur) I got my first digital camera as a present. Photography has since then become dear to my heart. But my love towards digital pictures developed even earlier, during the time I played computer games. I used to capture screenshots and panoramas of one or the other enchanting gaming world."); ?>
+			</p>
+			<p><?php echo _("Picture can carry a feeling, a state of mind. Many of the photos presented here do link to a thought of mine, that I embraced. The selection shown here is therefore not only based on aesthetics. I would like to encourage every visitor to search his own meaning in these pictures."); ?>
+			</p>
+			<p><?php echo _("I would like to dearly thank all the people that went with me part of the way and encouraged me to take it further. Thank you for your appreciation, recommendations, critique and support!"); ?>
+			</p>
+			<p><?php echo _("I currently live in Magdeburg, where I am studying computer science. Feel free to contact me via Email: "); ?><span>matthias.graf@eclasca.de</span>
+			</p>
+			<p><?php echo _("Have fun exploring the gallery!"); ?>
+			</p>
+		</div>
 	</header>
 	
 	<div id="overviewFrame"></div>
@@ -50,9 +65,20 @@ include_once "locale.php";
 	<img id="loadingCircle" class="opacity0" src="vector/loadingCircle_040.svg">
 	
 	<footer id="footer" class="opacity0">
-		<!-- to be defined -->
-		<div><!-- please keep a link to the source -->
-			<a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg"></a>
+		<div>
+			<strong><?php echo _("Copyright:"); ?></strong>
+			<br/>Matthias Graf
+			<br/>
+			<br/><strong><?php echo _("Contact:"); ?></strong>
+			<br/><a href="mailto:matthias.graf@eclasca.de">matthias.graf@eclasca.de</a>
+		</div>
+		<div>
+			<strong><?php echo _("Photo license:"); ?></strong>
+			<br/><a href="<?php echo _("http://creativecommons.org/licenses/by-nc-sa/3.0/"); ?>"><img id="ccLogo" src="fotograf/by-nc-sa_eu.svg"></a>
+		</div>
+		<div>
+			<strong><?php echo _("Gallery software used:"); ?></strong>
+			<br/><a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg"></a>
 		</div>
 	</footer>
 	

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fotofirmament\n"
-"POT-Creation-Date: 2013-08-22 16:26+0100\n"
-"PO-Revision-Date: 2013-08-22 16:26+0100\n"
+"POT-Creation-Date: 2013-08-23 13:42+0100\n"
+"PO-Revision-Date: 2013-08-23 13:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,65 +14,120 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: /var/www/html/webDevSandbox/fotofirmament\n"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:58
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:20
 msgid "This site requires JavaScript."
 msgstr "Diese Seite benötigt JavaScript."
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:66
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:27
 msgid "up"
 msgstr "nach oben"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:68
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:28
 msgid "down"
 msgstr "nach unten"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:70
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:29
 msgid "previous"
 msgstr "voriges"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:72
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:30
 msgid "next"
 msgstr "nächstes"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:74
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:31
 msgid "single image mode"
 msgstr "Einzelbildmodus"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:76
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:32
 msgid "fullscreen mode"
 msgstr "Vollbildmodus"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:78
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:33
 msgid "zoom in"
 msgstr "vergrößern"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:80
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:34
 msgid "zoom out"
 msgstr "verkleinern"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:88
-msgid "fotofirmament showcase gallery"
-msgstr "fotofirmament Beispielgalerie"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:46
+msgid "Welcome!"
+msgstr "Willkommen!"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:100
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:48
+msgid ""
+"Here you will find some of my finest photos. The latest are at the top, the "
+"oldest were shot in 2007. In this year, after my final school exams (Abitur) "
+"I got my first digital camera as a present. Photography has since then "
+"become dear to my heart. But my love towards digital pictures developed even "
+"earlier, during the time I played computer games. I used to capture "
+"screenshots and panoramas of one or the other enchanting gaming world."
+msgstr ""
+"Hier findest du einige meiner besten Fotos. Die Jüngsten ganz oben, die "
+"Ältesten sind 2007 entstanden. In diesem Jahr habe ich nach dem Abitur meine "
+"erste Digitalkamera geschenkt bekommen. Seitdem ist mir die Fotographie als "
+"Hobby fest ans Herz gewachsen. Doch meine Liebe zu digitalen Bildern reicht "
+"zurück bis in meine Computerspielezeit, in der ich bereits "
+"Bildschirmaufnahmen und Panoramen von so mancher bezaubernden Spielewelt "
+"geschossen habe."
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:50
+msgid ""
+"Picture can carry a feeling, a state of mind. Many of the photos presented "
+"here do link to a thought of mine, that I embraced. The selection shown here "
+"is therefore not only based on aesthetics. I would like to encourage every "
+"visitor to search his own meaning in these pictures."
+msgstr ""
+"Bilder können ein Lebensgefühl transportieren. An vielen dieser Fotos hängt "
+"deshalb für mich mehr, als das bloße Auge zu sehen vermag. Manche sind mit "
+"einer ganzen Gedankenwelt verknüpft. Deshalb ist es nicht nur Ästhetik, die "
+"ein Foto dafür qualifiziert, in dieser Galerie zu sein. Ich möchte jeden "
+"Besucher ermuntern, seine eigene Deutung in den Bildern zu suchen."
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:52
+msgid ""
+"I would like to dearly thank all the people that went with me part of the "
+"way and encouraged me to take it further. Thank you for your appreciation, "
+"recommendations, critique and support!"
+msgstr ""
+"Ein lieber Dank geht an all die Menschen, die mich auf meinem Weg begleitet "
+"und bestärkt haben, sei es durch ihre Anerkennung, Hinweise, Kritik oder "
+"Unterstützung."
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:54
+msgid ""
+"I currently live in Magdeburg, where I am studying computer science. Feel "
+"free to contact me via Email: "
+msgstr ""
+"Ich lebe übrigens derzeit in Magdeburg, wo ich Informatik studiere. "
+"Kontaktieren kannst du mich jederzeit gern via Email: "
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:56
+msgid "Have fun exploring the gallery!"
+msgstr "Viel Spaß beim stöbern!"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:69
 msgid "Copyright:"
 msgstr "Urheber:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:103
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:72
 msgid "Contact:"
 msgstr "Kontakt:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:107
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:76
 msgid "Photo license:"
 msgstr "Foto Lizenz:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:108
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:77
 msgid "http://creativecommons.org/licenses/by-nc-sa/3.0/"
 msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:111
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:80
 msgid "Gallery software used:"
 msgstr "Betrieben am:"
+
+#~ msgid "fotofirmament showcase gallery"
+#~ msgstr "fotofirmament Beispielgalerie"
 
 #~ msgid "Your Magnificent Title"
 #~ msgstr "Deine großartige Überschrift"
