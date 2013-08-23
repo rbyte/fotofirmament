@@ -23,12 +23,11 @@ function interfaceInit() {
 }
 
 function Fotofirmament(photos, pathToPhotos, pathToPreviews) { // this block spans the whole file, so I dont indent it
-
+// ---- CONSTANTS
 var self = this
 // set global reference for the DOM events
 fotofirmament = this
 
-// ---- constants
 // use the fullsize image for transition. slows transition smoothness (fps), but may look better.
 var useFullForAnimation = false
 var defaultFullsizeImageSize = 91 // % of browser width or height, whichever is closer
@@ -54,31 +53,13 @@ var scrollTransitionFunction = function(x) { return ( (Math.atan((x*2-1)*Math.PI
 // linear
 //var scrollTransitionFunction = function(x) { return x }
 
-
+// ---- METHOD DEFINTIONS
 // changing the class attribute of DOM elements is what we do lots, so lets simplify it
-function addOrReplaceClassAttr(elem, pattern, replacement) {
-	if (replacement === undefined) // only called with 2 params, which means "pattern" is the replacement
-		replacement = pattern
-	changeClassAttr(elem, pattern, replacement, replacement)
-}
-
-function switchClassAttr(elem, name) {
-	changeClassAttr(elem, name, "", name)
-}
-
-function removeClassAttr(elem, name) {
-	changeClassAttr(elem, name, "", "")
-}
-
-function changeClassAttr(elem, pattern, replacementIfMatch, replacementIfFail) {
-	changeAttr("class", elem, pattern, replacementIfMatch, replacementIfFail)
-}
-
-function changeAttr(attr, elem, pattern, replacementIfMatch, replacementIfFail) {
+self.changeAttr = function(attr, elem, pattern, replacementIfMatch, replacementIfFail) {
 	if (elem !== null) {
 		if (elem instanceof Array) {
 			for (var i=0; i<elem.length; i++)
-				changeAttr(attr, elem[i], pattern, replacementIfMatch, replacementIfFail)
+				self.changeAttr(attr, elem[i], pattern, replacementIfMatch, replacementIfFail)
 		} else {
 			if (typeof elem === 'string' || elem instanceof String) {
 				var domElem = document.getElementById(elem)
@@ -102,9 +83,24 @@ function changeAttr(attr, elem, pattern, replacementIfMatch, replacementIfFail) 
 	}
 }
 
+self.addOrReplaceClassAttr = function(elem, pattern, replacement) {
+	if (replacement === undefined) // only called with 2 params, which means "pattern" is the replacement
+		replacement = pattern
+	self.changeClassAttr(elem, pattern, replacement, replacement)
+}
 
+self.switchClassAttr = function(elem, name) {
+	self.changeClassAttr(elem, name, "", name)
+}
 
-// ---- METHOD DEFINTIONS
+self.removeClassAttr = function(elem, name) {
+	self.changeClassAttr(elem, name, "", "")
+}
+
+self.changeClassAttr = function(elem, pattern, replacementIfMatch, replacementIfFail) {
+	self.changeAttr("class", elem, pattern, replacementIfMatch, replacementIfFail)
+}
+
 self.next = function () {
 	if (self.current > 0) {
 		self.current--
@@ -139,15 +135,15 @@ self.switchCurrent = function(oldCurrent, newCurrent) {
 		self.photos[newCurrent].show()
 		self.updateURL()
 	} else {
-		removeClassAttr(self.photos[oldCurrent].preview, "isCurrent")
-		addOrReplaceClassAttr(self.photos[newCurrent].preview, "isCurrent")
+		self.removeClassAttr(self.photos[oldCurrent].preview, "isCurrent")
+		self.addOrReplaceClassAttr(self.photos[newCurrent].preview, "isCurrent")
 	}
 	self.photos[newCurrent].scrollTo()
 }
 
 self.switchOpenClosePhoto = function(id) {
 	if (self.overviewIsActive) {
-		removeClassAttr(self.photos[self.current].preview, "isCurrent")
+		self.removeClassAttr(self.photos[self.current].preview, "isCurrent")
 		if (id !== undefined) // if (id) does NOT work because id can be 0.
 			self.current = id
 		self.hideOverview()
@@ -221,7 +217,7 @@ self.getIdFromPhotoName = function(name) {
 
 self.finishedLoading = function(photoId) {
 	if (photoId === self.current) {
-		addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
+		self.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
 		// start to preload next and previous photo
 		if (self.current+1 < self.photos.length)
 			self.preload(self.photos[self.current+1])
@@ -318,13 +314,13 @@ self.hideOverview = function() {
 	self.overviewIsActive = false
 	var ruleStyle = self.getCustomStyleCSSRule()
 	ruleStyle.opacity = 0
-	addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity0")
+	self.addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity0")
 	self.runTimerForHidingInterfaceElements()
 
 	window.setTimeout(function () {
 		self.showChangeImageButton()
 		if (self.isFullscreen())
-			addOrReplaceClassAttr(document.body, "hideScrollbar")
+			self.addOrReplaceClassAttr(document.body, "hideScrollbar")
 	}, cssUpdateMargin)
 }
 
@@ -334,41 +330,41 @@ self.showOverview = function() {
 	var ruleStyle = self.getCustomStyleCSSRule()
 	ruleStyle.opacity = 1
 	self.hideChangeImageButton()
-	addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
-	addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity1")
+	self.addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
+	self.addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity1")
 	
 	// if we dont wait, the overview will be visible right away, without the transition
 	window.setTimeout(function () {
-		removeClassAttr(document.body, "hideScrollbar")
+		self.removeClassAttr(document.body, "hideScrollbar")
 	}, cssUpdateMargin)
 }
 
 self.hideChangeImageButton = function() {
-	addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity0")
-	addOrReplaceClassAttr(["next", "previous"], "noClick")
+	self.addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity0")
+	self.addOrReplaceClassAttr(["next", "previous"], "noClick")
 }
 
 self.showChangeImageButton = function() {
-	addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity_CIB")
-	removeClassAttr(["next", "previous"], "noClick")
+	self.addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity_CIB")
+	self.removeClassAttr(["next", "previous"], "noClick")
 }
 
 // after mouse rested a while
 self.hideInterfaceElements = function() {
 	self.hideChangeImageButton()
-	addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity0")
+	self.addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity0")
 	
 	var currentFullFluid = self.photos[self.current].fullFluid
 	if (currentFullFluid)if (currentFullFluid.parentNode)
-		addOrReplaceClassAttr(currentFullFluid.parentNode, "hideCursor")
+		self.addOrReplaceClassAttr(currentFullFluid.parentNode, "hideCursor")
 }
 
 self.showInterfaceElements = function() {
 	self.showChangeImageButton()
-	addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
+	self.addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
 	var currentFullFluid = self.photos[self.current].fullFluid
 	if (currentFullFluid) if (currentFullFluid.parentNode)
-		removeClassAttr(currentFullFluid.parentNode, "hideCursor")
+		self.removeClassAttr(currentFullFluid.parentNode, "hideCursor")
 }
 
 self.runTimerForHidingInterfaceElements = function() {
@@ -413,7 +409,7 @@ self.isFullscreen = function() {
 
 self.requestFullscreen = function() {
 	if (!self.overviewIsActive)
-		addOrReplaceClassAttr(document.body, "hideScrollbar")
+		self.addOrReplaceClassAttr(document.body, "hideScrollbar")
 	
 	self.fullsizeImageSize = defaultFullscreenFullsizeImageSize
 	self.updateFillStyleOfCurrent()
@@ -429,7 +425,7 @@ self.requestFullscreen = function() {
 }
 
 self.cancelFullscreen = function() {
-	removeClassAttr(document.body, "hideScrollbar") // show scrollbar again
+	self.removeClassAttr(document.body, "hideScrollbar") // show scrollbar again
 //	if (!self.overviewIsActive)
 //		self.showChangeImageButton()
 	self.fullsizeImageSize = defaultFullsizeImageSize
@@ -446,11 +442,11 @@ self.cancelFullscreen = function() {
 self.showErrorMessageToUser = function(message) {
 	document.getElementById("errorMessages").innerHTML =
 		"Oops. Something went wrong. "+(message !== undefined ? message : "The console output may provide more insight.")
-	removeClassAttr("errorMessages", "hidden")
+	self.removeClassAttr("errorMessages", "hidden")
 }
 
 self.hideErrorMessages = function() {
-	addOrReplaceClassAttr("errorMessages", "hidden")
+	self.addOrReplaceClassAttr("errorMessages", "hidden")
 }
 
 self.key_w = function() { self.up() }
@@ -541,7 +537,7 @@ function Photo(id, photo) {
 	//		self.preview.setAttribute("onmouseover", "mouseoverPreview(this)")
 		frameDiv.appendChild(self.preview)
 		self.preview.addEventListener('load', function () {
-			addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1")
+			fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1")
 		}, true)
 		self.preview.setAttribute("src", self.previewUrl)
 	}
@@ -621,8 +617,8 @@ function Photo(id, photo) {
 		var style = self.getStyleForTransitionStart()
 		self.previewScaled = self.newFrame("previewScaled", "frame z2", "movingImage", style, self.previewUrl)
 		if (useFullForAnimation) self.full = self.newFrame("full", "frame z3", "movingImage", style, self.url)
-		addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity0_noTransition")
-		addOrReplaceClassAttr(self.preview, "visited")
+		fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity0_noTransition")
+		fotofirmament.addOrReplaceClassAttr(self.preview, "visited")
 
 		window.setTimeout(function () {
 			var style = self.getStyleForTransitionEnd()
@@ -644,7 +640,7 @@ function Photo(id, photo) {
 	}
 
 	self.removeOpenTransitionArtifacts = function() {
-		addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1_noTransition")
+		fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1_noTransition")
 		self.removeFrameOf(self.previewScaled)
 		if (useFullForAnimation) self.removeFrameOf(self.full)
 	}
@@ -656,10 +652,10 @@ function Photo(id, photo) {
 			var style = self.getStyleForTransitionEnd()
 			self.previewScaled = self.newFrame("previewScaled", "frame z2", "movingImage", style, self.previewUrl)
 			if (useFullForAnimation) self.full = self.newFrame("full", "frame z3", "movingImage", style, self.url)
-			addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity0_noTransition")
+			fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity0_noTransition")
 			self.removeFrameOf(self.previewScaledFluid)
 			self.removeFrameOf(self.fullFluid)
-			addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
+			fotofirmament.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
 			self.scrollTo("noAnimation")
 		} else {
 			console.log("close() has been called before open() could finish transitioning")
@@ -673,10 +669,10 @@ function Photo(id, photo) {
 
 		window.setTimeout(function () {
 			self.removeOpenTransitionArtifacts()
-			addOrReplaceClassAttr(self.preview, "visited")
+			fotofirmament.addOrReplaceClassAttr(self.preview, "visited")
 			// disabled. I only want to see the isCurrent markup if I used keys (not the mouse)
 			if (false) if (fotofirmament.overviewIsActive && self.id === fotofirmament.current)
-				addOrReplaceClassAttr(self.preview, "isCurrent")
+				fotofirmament.addOrReplaceClassAttr(self.preview, "isCurrent")
 		}, transitionLengthPlusMargin)
 	}
 
@@ -686,15 +682,15 @@ function Photo(id, photo) {
 			, "rawImage z1 opacity0", "", self.url, self.callbackOnFinishedLoading)
 		self.updateFillStyle("force")
 		if (self.preview) // is null before overview is loaded.
-			addOrReplaceClassAttr(self.preview, "visited")
+			fotofirmament.addOrReplaceClassAttr(self.preview, "visited")
 
 		window.setTimeout(function () {
-			addOrReplaceClassAttr([self.previewScaledFluid, self.fullFluid], /opacity[^ ]*/, "opacity1")
+			fotofirmament.addOrReplaceClassAttr([self.previewScaledFluid, self.fullFluid], /opacity[^ ]*/, "opacity1")
 		}, cssUpdateMargin)
 
 		window.setTimeout(function () {
-			addOrReplaceClassAttr(self.previewScaledFluid, /z./, "z2")
-			addOrReplaceClassAttr(self.fullFluid, /z./, "z3")
+			fotofirmament.addOrReplaceClassAttr(self.previewScaledFluid, /z./, "z2")
+			fotofirmament.addOrReplaceClassAttr(self.fullFluid, /z./, "z3")
 		}, transitionLengthPlusMargin)
 
 		self.showLoadingCircleIfNotFinishedLoadingAfterInterval()
@@ -705,9 +701,9 @@ function Photo(id, photo) {
 		self.removeOpenTransitionArtifacts()
 		// may be null if next was called, before transition could end (resulting in showing the full picture)
 		if (self.previewScaledFluid)
-			addOrReplaceClassAttr(self.previewScaledFluid, /opacity[^ ]*/, "opacity0")
+			fotofirmament.addOrReplaceClassAttr(self.previewScaledFluid, /opacity[^ ]*/, "opacity0")
 		if (self.fullFluid)
-			addOrReplaceClassAttr(self.fullFluid, /opacity[^ ]*/, "opacity0")
+			fotofirmament.addOrReplaceClassAttr(self.fullFluid, /opacity[^ ]*/, "opacity0")
 
 		window.setTimeout(function () {
 			if (self.id !== fotofirmament.current) {
@@ -720,7 +716,7 @@ function Photo(id, photo) {
 	self.showLoadingCircleIfNotFinishedLoadingAfterInterval = function() {
 		window.setTimeout(function () {
 			if (!self.finishedLoading && fotofirmament.current === self.id)
-				addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity1")
+				fotofirmament.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity1")
 		}, showLoadingCircleAfterMS)
 	}
 	
@@ -800,7 +796,7 @@ function Photo(id, photo) {
 
 
 
-
+// ---- MAIN
 // in case multiple timers are running in parallel, used to determine which is the current/latest one
 var currentTimerID = 0
 var currentScrollAnimationID = 0
