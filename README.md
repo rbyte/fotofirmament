@@ -3,9 +3,13 @@ fotofirmament webgallery
 
 A webgallery that places the emphasis on where it belongs: *Your Pictures*.
 
+####About:
+Author: Matthias Graf
+Email: matthias.graf <a> eclasca.de
+Licence: AGPLv3
+
 ####Showcase gallery:
 http://fotograf.eclasca.de/
-
 This is my own customised instance of the fotofirmament.
 
 ####Key features:
@@ -63,10 +67,5 @@ A little more advanced:
 Please feel free to contribute to this project!
 
 I track my own ideas in the 2dos.txt. There may also be TODO-s in the code.
-
-####About:
-Author: Matthias Graf
-Email: matthias.graf <a> eclasca.de
-Licence: AGPLv3
 
 
