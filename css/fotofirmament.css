@@ -1,6 +1,7 @@
 .custom { /* has to be the first rule in here, because I do access it via JS[0] */
 }
 body {
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	/* Credit: Stephen Gilbert, http://subtlepatterns.com/textured-paper/ */
@@ -12,37 +13,21 @@ body {
 	 /* transparent. counters white background in fullscreen mode in chrome */
 	background-color: rgba(0,0,0,0);
 }
+a {
+	outline : none;
+}
 @font-face {
 	/* IE: @font-face failed OpenType embedding permission check. Permission must be Installable. */
 	font-family: MySymbols; /* http://www.freefontconverter.com/ */
 	src: url("../vector/mySymbols9.ttf") format('truetype');
 }
-#title {
-	width: 100%;
-	top: 0;
-	background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
-	
-	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.3);
-	transition: opacity 400ms ease-in-out, max-height 1200ms ease-in-out 300ms;
-	overflow: hidden;
-}
-.logoInTitle {
-	text-align: center;
-	font-family: sans-serif;
-	font-size: 30px; /* in the future, font-size should be relative to the browser window (using vh)*/
-    padding: 10px; /* top right bottom left*/
-	color: rgba(200, 200, 200, 1);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-	cursor: pointer;
-}
-.menu {
+#menu {
 	transition: opacity 300ms ease-in-out;
 }
-.menu:hover {
+#menu:hover {
 	opacity: 1 !important;
 }
-.menu ul {
+#menu ul {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -51,7 +36,7 @@ body {
     list-style: none;
 	z-index: 5;
 }
-.menu ul li {
+#menu ul li {
     position: relative;
     display: block;
 	padding-right: 5px;
@@ -60,33 +45,33 @@ body {
 	cursor: pointer;
 	-moz-user-select: none;
 }
-.menu ul ul {
+#menu ul ul {
 	position: absolute;
 	top: 100%;
 	left: 0;
     display: none;
 	box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.1);
 }
-.menu ul ul li {
+#menu ul ul li {
     float: none;
 	padding: 0 0 4px 0;
 	background: rgba(0, 0, 0, 0.7);
 	/*transition: box-shadow 100ms ease-in-out;*/
 }
-.menu li:hover {
+#menu li:hover {
 	background: rgba(0, 0, 0, 0.7);
 }
-.menu li:hover ul {
+#menu li:hover ul {
     display: block;
 }
-.menu li li:hover {
+#menu li li:hover {
 	/* h, v, blur, spread, colour, inset? */
 	box-shadow: 15px 0px 40px -15px rgba(255, 255, 255, 0.6) inset;
 }
-.menu li li:hover .desc, .menu li li:hover .symbol {
+#menu li li:hover .desc, #menu li li:hover .symbol {
 	color: #ddd;
 }
-.menu li li:hover .key {
+#menu li li:hover .key {
 	background: linear-gradient(to bottom, #C2C2C2, #EEE);
 }
 .symbol {
@@ -157,11 +142,11 @@ last line of previews in not aligned */
 	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3);
 	transition: opacity 400ms ease-in-out, box-shadow 300ms ease-in-out;
 }
-.visited {
-	/*border-top-right-radius: 8px;*/
-}
 .previewPic:hover {
 	/*box-shadow: 3px 3px 8px 2px rgba(0,0,0,0.4);*/
+}
+.visited {
+	/*border-top-right-radius: 8px;*/
 }
 .isCurrent {
 	box-shadow: 0px 1px 30px 4px rgba(255,255,255,0.6);
@@ -182,25 +167,6 @@ last line of previews in not aligned */
 	background-image: linear-gradient(#777 0%, #333 100%) !important;
 	transition: all 200ms ease-in-out;
 }
-/*.hideTitleButton {
-	position: fixed;
-	font-family: MySymbols;
-	font-size: 16px;
-	padding: 10px;
-	top: 2px;
-	right: 4px;
-	color: rgba(180, 180, 180, 1);
-	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
-	cursor: pointer;
-	transition: transform 600ms ease-in-out, color 200ms ease-in-out;
-}
-.hideTitleButton:hover {
-	color: rgba(230, 230, 230, 1);
-}
-.hideTitleButtonReversed {
-	transform: rotate(180deg);
-	color: rgba(130, 130, 130, 1);
-}*/
 .imgContainerDiv {
 	text-align: center;
 	display: inline-block;
@@ -214,70 +180,10 @@ last line of previews in not aligned */
 	transition: opacity 400ms ease-in-out;
 	z-index: 3;
 }
-.hideScrollbar {
-	overflow: hidden;
-}
 .imageBGnShadow {
 	box-shadow: 3px 3px 14px 2px rgba(0,0,0,0.3); /* horizontal, vertical, blur radius, spread radius */
 /*	box-shadow: 0px 7px 20px 3px rgba(0,0,0,0.2); */
 	background-color: rgba(0, 0, 0, 0.3);
-}
-.logo {
-	position: fixed;
-	opacity: 0.13;
-	height: 3%;
-	bottom: .5%;
-	right: 1%;
-	transition: all 500ms ease-in-out;
-}
-.logo:hover {
-	opacity: 0.8;
-	right: 2%;
-}
-footer {
-	width: 100%;
-	/*display: table;*/
-	font-family: sans-serif;
-	font-size: 120%;
-	font-weight: 100;
-	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-	color: rgba(150, 150, 150, 1);
-	text-align: center;
-	bottom: 0;
-	/* Credit: ESO/S. Brunier, http://www.eso.org/public/germany/images/eso0932a/ */
-	background-image: url("../images/eso0932a_050.jpg");
-	background-size: cover;
-	background-position: center;
-	background-color: rgba(0, 0, 0, 0.2);
-	/*border-top: solid 2px rgba(0, 0, 0, 0.3);*/
-	box-shadow: 0px 20px 20px -10px rgba(0,0,0,0.5) inset;
-	transition: opacity 400ms ease-in-out;
-}
-footer div {
-	display: inline-block;
-	padding: 3% 4%;
-	max-width: 250px;
-	vertical-align: top;
-	text-align: left;
-}
-footer a {
-	border: 0;
-	text-decoration: none;
-	color: rgba(150, 150, 150, 1);
-}
-footer img {
-	opacity: 0.4;
-	padding: 3px 0;
-	transition: opacity 300ms ease-in-out;
-}
-#ccLogo {
-	height: 2em;
-}
-#fotofirmamentLogo {
-	width: 100%;
-}
-#ccLogo:hover, #fotofirmamentLogo:hover {
-	opacity: 0.7;
 }
 noscript, #errorMessages {
 	position: fixed;
@@ -312,18 +218,19 @@ noscript, #errorMessages {
 	0% {	transform: rotate(0deg); }
 	100% {	transform: rotate(360deg); }
 }
-.changeImageButton {
+#previous, #next {
 	position: fixed;
 	cursor: pointer;
 	padding: 2%; /* for a large click-zone */
 /*	background-color: #555;*/
 	width: 2%;
 	top: 47%;
+	z-index: 4;
 	transition: opacity 300ms ease-in-out, left 250ms ease-in-out, right 250ms ease-in-out;
 }
-.changeImageButton:hover {
+#previous:hover, #next:hover {
 	opacity: 1 !important;
-	display: block !important;
+	pointer-events: auto !important;
 }
 #previous {
 	-webkit-transform: rotate(180deg);
@@ -340,13 +247,14 @@ noscript, #errorMessages {
 	left: -1.5%;
 }
 .opacity_CIB { opacity: 0.2; }
-/*.CIB_opacity:hover { opacity: 1; }*/
 .opacity0 { opacity: 0.0; }
 .opacity1 { opacity: 1.0; }
 .opacity0_noTransition { opacity: 0.0; transition: box-shadow 300ms ease-in-out !important; }
 .opacity1_noTransition { opacity: 1.0; transition: box-shadow 300ms ease-in-out !important; }
 .hidden { display: none; }
+.noClick { pointer-events: none; }
 .hideCursor { cursor: none; }
+.hideScrollbar { overflow: hidden; }
 .z0 { z-index: 0; }
 .z1 { z-index: 1; }
 .z2 { z-index: 2; }

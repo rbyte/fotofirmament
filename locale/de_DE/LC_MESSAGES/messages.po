@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fotofirmament\n"
-"POT-Creation-Date: 2013-08-22 14:50+0100\n"
-"PO-Revision-Date: 2013-08-22 14:53+0100\n"
+"POT-Creation-Date: 2013-08-22 16:26+0100\n"
+"PO-Revision-Date: 2013-08-22 16:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -51,9 +51,28 @@ msgid "zoom out"
 msgstr "verkleinern"
 
 #: /var/www/html/webDevSandbox/fotofirmament/index.php:88
-msgid "Your Magnificent Title"
-msgstr "Deine großartige Überschrift"
+msgid "fotofirmament showcase gallery"
+msgstr "fotofirmament Beispielgalerie"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:101
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:100
+msgid "Copyright:"
+msgstr "Urheber:"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:103
+msgid "Contact:"
+msgstr "Kontakt:"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:107
+msgid "Photo license:"
+msgstr "Foto Lizenz:"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:108
+msgid "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:111
 msgid "Gallery software used:"
 msgstr "Betrieben am:"
+
+#~ msgid "Your Magnificent Title"
+#~ msgstr "Deine großartige Überschrift"

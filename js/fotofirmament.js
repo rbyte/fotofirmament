@@ -1,6 +1,7 @@
 /*
 	Fotofirmament Webgallery
 	Copyright (C) 2013 Matthias Graf
+	matthias.graf <a> eclasca.de
 	
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU Affero General Public License as published by
@@ -272,7 +273,7 @@ self.updateFitIntoHorizontal = function() {
 self.getCustomStyleCSSRule = function() {
 	// I dont want to change the style of very element, so I change the css rules instead..
 	// http://www.quirksmode.org/dom/changess.html
-	var styleIndex = 0 // there is only one on my page
+	var styleIndex = 0
 	var cssRuleCode = document.all ? 'rules' : 'cssRules' //account for IE and FF
 	var ruleIndex = 0 // well, 0 for simplicity reasons. the rule changed has to be put as first in the css!
 	var rule = document.styleSheets[styleIndex][cssRuleCode][ruleIndex]
@@ -344,20 +345,12 @@ self.showOverview = function() {
 
 self.hideChangeImageButton = function() {
 	addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity0")
-
-	window.setTimeout(function () {
-		if (document.getElementById("next").getAttribute("class").match(/opacity0/))
-			addOrReplaceClassAttr(["next", "previous"], "hidden")
-	}, transitionLengthPlusMargin)
+	addOrReplaceClassAttr(["next", "previous"], "noClick")
 }
 
 self.showChangeImageButton = function() {
-	removeClassAttr(["next", "previous"], "hidden")
-	addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity0")
-	
-	window.setTimeout(function () {
-		addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity_CIB")
-	}, cssUpdateMargin)
+	addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity_CIB")
+	removeClassAttr(["next", "previous"], "noClick")
 }
 
 // after mouse rested a while
