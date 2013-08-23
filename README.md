@@ -41,7 +41,7 @@ This is my own customised instance of the fotofirmament.
 If you do not have a webserver set up, you can also open ./index_evaluatedExample.htm in your browser. This will allow you to test it locally. However, this is static, so no new images will be loaded.
 
 ####Requirements:
-Users: just a modern, W3C-complient HTML5-capable webbrowser
+Users: just a modern, W3C-compliant HTML5-capable webbrowser
 * Mozilla Firefox >=23 works reliably
 * Chromium >=27 works reliably (so webkit-based browsers will, I suppose)
 * Microsoft Internet Explorer 10 *does not work*
@@ -63,3 +63,10 @@ A little more advanced:
 Please feel free to contribute to this project!
 
 I track my own ideas in the 2dos.txt. There may also be TODO-s in the code.
+
+####About:
+Author: Matthias Graf
+Email: matthias.graf <a> eclasca.de
+Licence: AGPLv3
+
+
