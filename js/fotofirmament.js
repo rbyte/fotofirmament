@@ -44,11 +44,11 @@ var transitionLength = 400
 var cssUpdateMargin = 10
 // align this with the css rules
 var transitionLengthPlusMargin = transitionLength + 70
-var showLoadingCircleAfterMS = transitionLength + 200
+var showLoadingCircleAfterMS = transitionLength + 500
 var timeToWaitUntilInterfaceElementsAreHiddenInSingleImageMode = 2000
 var timeBetweenScrollingSteps = 10
 var totalScrollingTime = 20 * timeBetweenScrollingSteps
-var scrollOvershoot = 90 // px
+var scrollOvershoot = 75 // px
 // input and output are in [0,1]
 // approximates ease-in-out
 var scrollTransitionFunction = function(x) { return ( (Math.atan((x*2-1)*Math.PI/2)+1)/2 ) }
