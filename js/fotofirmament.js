@@ -33,6 +33,7 @@ var useFullForAnimation = false
 var defaultFullsizeImageSize = 91 // % of browser width or height, whichever is closer
 var defaultFullscreenFullsizeImageSize = 100
 var spaceBetweenPreviewsInPercentOfHorizontal = 0.2
+var numberOfPreviewsToLoadInParallel = 4
 // all in milliseconds
 // if this is changed, it also has to be adjusted in the css!
 var transitionLength = 400
@@ -56,7 +57,7 @@ var scrollTransitionFunction = function(x) { return ( (Math.atan((x*2-1)*Math.PI
 // ---- METHOD DEFINTIONS
 // changing the class attribute of DOM elements is what we do lots, so lets simplify it
 self.changeAttr = function(attr, elem, pattern, replacementIfMatch, replacementIfFail) {
-	if (elem !== null) {
+	if (elem !== null && elem !== undefined) {
 		if (elem instanceof Array) {
 			for (var i=0; i<elem.length; i++)
 				self.changeAttr(attr, elem[i], pattern, replacementIfMatch, replacementIfFail)
@@ -79,7 +80,7 @@ self.changeAttr = function(attr, elem, pattern, replacementIfMatch, replacementI
 					elem.setAttribute(attr, c+" "+replacementIfFail)
 		}
 	} else {
-		console.log("Warning in changeAttr: element is null!")
+		console.log("Warning in changeAttr: element is null/undefined!")
 	}
 }
 
@@ -104,47 +105,50 @@ self.changeClassAttr = function(elem, pattern, replacementIfMatch, replacementIf
 self.next = function () {
 	if (self.current > 0) {
 		self.current--
-		self.switchCurrent(self.current+1, self.current)
+		self.switchCurrent(self.current+1)
 	}
 }
 
 self.previous = function () {
 	if (self.current+1 < self.photos.length) {
 		self.current++
-		self.switchCurrent(self.current-1, self.current)
+		self.switchCurrent(self.current-1)
 	}
 }
 
 self.up = function () {
 	if (self.current - numberOfPreviewsFittingIntoHorizontal >= 0) {
 		self.current -= numberOfPreviewsFittingIntoHorizontal
-		self.switchCurrent(self.current + numberOfPreviewsFittingIntoHorizontal, self.current)
+		self.switchCurrent(self.current + numberOfPreviewsFittingIntoHorizontal)
 	}
 }
 
 self.down = function () {
 	if (self.current + numberOfPreviewsFittingIntoHorizontal < self.photos.length) {
 		self.current += numberOfPreviewsFittingIntoHorizontal
-		self.switchCurrent(self.current - numberOfPreviewsFittingIntoHorizontal, self.current)
+		self.switchCurrent(self.current - numberOfPreviewsFittingIntoHorizontal)
 	}
 }
 
-self.switchCurrent = function(oldCurrent, newCurrent) {
+self.switchCurrent = function(oldCurrent) {
 	if (!self.overviewIsActive) {
 		self.photos[oldCurrent].hide()
-		self.photos[newCurrent].show()
+		// the idea was to stop all currently ongoing preloading to load the new current with full priority
+		// however, there seems to be no simple solution to do this
+//		window.stop()
+		self.photos[self.current].show()
 		self.updateURL()
 	} else {
 		self.removeClassAttr(self.photos[oldCurrent].preview, "isCurrent")
-		self.addOrReplaceClassAttr(self.photos[newCurrent].preview, "isCurrent")
+		self.addOrReplaceClassAttr(self.photos[self.current].preview, "isCurrent")
 	}
-	self.photos[newCurrent].scrollTo()
+	self.photos[self.current].scrollTo()
 }
 
 self.switchOpenClosePhoto = function(id) {
 	if (self.overviewIsActive) {
 		self.removeClassAttr(self.photos[self.current].preview, "isCurrent")
-		if (id !== undefined) // if (id) does NOT work because id can be 0.
+		if (id !== undefined) // "if (id)" does NOT work because id can be 0.
 			self.current = id
 		self.hideOverview()
 		self.photos[self.current].open()
@@ -157,8 +161,41 @@ self.switchOpenClosePhoto = function(id) {
 	self.updateURL()
 }
 
+self.triggerPreloading = function(photoId) {
+	if (photoId === self.current) {
+		self.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
+		if (self.current+1 < self.photos.length)
+			self.photos[self.current+1].loadFullsize()
+		if (self.current-1 >= 0)
+			self.photos[self.current-1].loadFullsize()
+	}
+}
+
+self.startLoadingNextPreview = function() {
+	if (!self.overviewIsActive && !self.photos[self.current].finishedLoadingFull) {
+		window.setTimeout(function () { self.startLoadingNextPreview() }, 500)
+		return
+	}
+	// TODO load previews in a more intelligent on-demand way
+	// -> calulate which previews are actually visible (depends on page position, how many fit into horizontal, body width and preview aspect)
+	// -> changes with selected image, page scroll, window resize, zoom in/out
+	
+	// find the closest preview to current, that has not been loaded yet, and load it
+	for (var i=0; i<self.photos.length; i++) {
+		if (self.current+i < self.photos.length && !self.photos[self.current+i].startedLoadingPreview) {
+			self.photos[self.current+i].loadPreview()
+			break
+		}
+		if (self.current-i >= 0 && !self.photos[self.current-i].startedLoadingPreview) {
+			self.photos[self.current-i].loadPreview()
+			break
+		}
+	}
+}
+
 self.zoomOut = function() {
 	if (self.overviewIsActive) {
+		// TODO increase with factor: 10 * 1.3 = 13, statt 11
 		numberOfPreviewsFittingIntoHorizontal++
 		self.setPreviewSize()
 	} else {
@@ -215,34 +252,9 @@ self.getIdFromPhotoName = function(name) {
 	return -1
 }
 
-self.finishedLoading = function(photoId) {
-	if (photoId === self.current) {
-		self.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
-		// start to preload next and previous photo
-		if (self.current+1 < self.photos.length)
-			self.preload(self.photos[self.current+1])
-		if (self.current-1 > 0)
-			self.preload(self.photos[self.current-1])
-	}
-}
-
-self.preload = function(photo) {
-	if (!photo.finishedLoading) {
-//			console.log("preloading: "+photo.id)
-		var i = new Image()
-		i.addEventListener('load', function () {
-			photo.finishedLoading = true
-		})
-		i.onerror = function() {
-			self.showErrorMessageToUser()
-			console.log("Error loading image: "+photo.url)
-		}
-		i.src = photo.url
-	}
-}
-
 self.setHowManyPreviewsShouldFitIntoHorizontal = function() {
 	var w = window.innerWidth
+	// TODO refactor
 	if (w < 800) numberOfPreviewsFittingIntoHorizontal = 2
 	else if (w < 1100) numberOfPreviewsFittingIntoHorizontal = 3
 	else if (w < 1400) numberOfPreviewsFittingIntoHorizontal = 4
@@ -481,45 +493,8 @@ self.key_esc = function() { self.escape() }
 function Photo(id, photo) {
 	var self = this
 
-	self.id = id
-	// {name: "22859.jpg", width: "1920", height: "1280", make: "Canon", model: "Canon EOS 400D DIGITAL"
-	// , exposure: "1/800", aperture: "f/3.2", date: "2013:06:24 20:11:48", focalLength: "50/1", iso: "100"}
-	self.name = photo.name
-	
-	self.width = parseInt(photo.width)
-	self.height = parseInt(photo.height)
-	if (isNaN(self.width) || isNaN(self.height) || self.width <= 0 || self.height <= 0) {
-		console.log("The Photo "+self.name+" reports an invalid width or height.")
-		self.showErrorMessageToUser()
-		// try to be robust
-		self.width = 300
-		self.height = 200
-	}
-
-	// optional
-	if (photo.make			!== undefined) self.make		= photo.make
-	if (photo.mode			!== undefined) self.model		= photo.model
-	if (photo.exposure		!== undefined) self.exposure	= photo.exposure
-	if (photo.aperture		!== undefined) self.aperture	= photo.aperture
-	if (photo.date			!== undefined) self.date		= photo.date
-	if (photo.focalLength	!== undefined) self.focalLength = photo.focalLength
-	if (photo.iso			!== undefined) self.iso			= photo.iso
-	
-	self.url = pathToPhotos + self.name
-	self.previewUrl = pathToPreviews + self.name
-
-	self.finishedLoading = false
-	self.fillStyle
-
-	// DOM elements
-	self.preview
-	self.previewScaled
-	self.previewScaledFluid
-	self.full
-	self.fullFluid
-
-	// ---- METHOD DEFINITION
-	self.loadPreview = function() {
+	// ---- METHOD DEFINITIONS
+	self.setupPreview = function() {
 		var frameDiv = document.createElement("div")
 		frameDiv.setAttribute("id", "preview"+self.id)
 		frameDiv.setAttribute("class", "imgContainerDiv custom")
@@ -537,12 +512,30 @@ function Photo(id, photo) {
 	//		self.preview.setAttribute("onmouseover", "mouseoverPreview(this)")
 		frameDiv.appendChild(self.preview)
 		self.preview.addEventListener('load', function () {
+//			console.log("done to load preview: "+self.id)
 			fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1")
+			fotofirmament.startLoadingNextPreview()
 		}, true)
-		self.preview.setAttribute("src", self.previewUrl)
+	}
+	
+	self.loadPreview = function() {
+		if (!self.startedLoadingPreview) {
+//			console.log("starting to load preview: "+self.id)
+			self.startedLoadingPreview = true
+			self.preview.setAttribute("src", self.previewUrl)
+		}
+	}
+	
+	self.loadFullsize = function() {
+		if (!self.finishedLoadingFull) {
+			self.fullImage.src = self.url
+		} else {
+			// for triggering further preloading
+			fotofirmament.triggerPreloading(self.id)
+		}
 	}
 
-	self.newFrame = function(name, frameClass, picClass, style, src, callbackOnImageLoaded) {
+	self.newFrame = function(name, frameClass, picClass, style, src) {
 		var frameDiv = document.createElement("div")
 		frameDiv.setAttribute("id", "picFrame_"+name+self.id)
 //		frameDiv.setAttribute("idPhoto", self.id)
@@ -560,16 +553,9 @@ function Photo(id, photo) {
 		pic.setAttribute("class", picClass)
 		pic.setAttribute("style", style)
 		pic.setAttribute("onclick", "fotofirmament.clickedClose(this)")
-		if (callbackOnImageLoaded !== undefined)
-			pic.addEventListener('load', callbackOnImageLoaded, true)
 		pic.setAttribute("src", src)
 		frameDiv.appendChild(pic)
 		return pic
-	}
-
-	self.callbackOnFinishedLoading = function () {
-		self.finishedLoading = true
-		fotofirmament.finishedLoading(self.id)
 	}
 
 	// keyframes for transitioning a preview (in overview mode) to its fullsize
@@ -613,7 +599,7 @@ function Photo(id, photo) {
 	// realises going from overview mode to the single image viewing mode
 	self.open = function() {
 		// during transition, loading can already be started
-		fotofirmament.preload(this)
+		self.loadFullsize()
 		var style = self.getStyleForTransitionStart()
 		self.previewScaled = self.newFrame("previewScaled", "frame z2", "movingImage", style, self.previewUrl)
 		if (useFullForAnimation) self.full = self.newFrame("full", "frame z3", "movingImage", style, self.url)
@@ -630,7 +616,7 @@ function Photo(id, photo) {
 			if (!fotofirmament.overviewIsActive && self.id === fotofirmament.current) {
 				self.previewScaledFluid = self.newFrame("previewScaledFluid", "frame z2", "rawImage z2 imageBGnShadow opacity1", "", self.previewUrl)
 				self.fullFluid = self.newFrame("fullFluid", "frame z3"+(fotofirmament.interfaceElementsAreHidden ? " hideCursor" : "")
-					, "rawImage z3 opacity1", "", self.url, self.callbackOnFinishedLoading)
+					, "rawImage z3 opacity1", "", self.url)
 				self.updateFillStyle("force")
 				self.removeOpenTransitionArtifacts()
 			}
@@ -677,9 +663,10 @@ function Photo(id, photo) {
 	}
 
 	self.show = function() {
+		self.loadFullsize()
 		self.previewScaledFluid = self.newFrame("previewScaledFluid", "frame z2", "rawImage z0 imageBGnShadow opacity0", "", self.previewUrl)
 		self.fullFluid = self.newFrame("fullFluid", "frame z3"+(fotofirmament.interfaceElementsAreHidden ? " hideCursor" : "")
-			, "rawImage z1 opacity0", "", self.url, self.callbackOnFinishedLoading)
+			, "rawImage z1 opacity0", "", self.url)
 		self.updateFillStyle("force")
 		if (self.preview) // is null before overview is loaded.
 			fotofirmament.addOrReplaceClassAttr(self.preview, "visited")
@@ -715,7 +702,7 @@ function Photo(id, photo) {
 
 	self.showLoadingCircleIfNotFinishedLoadingAfterInterval = function() {
 		window.setTimeout(function () {
-			if (!self.finishedLoading && fotofirmament.current === self.id)
+			if (!self.finishedLoadingFull && !fotofirmament.overviewIsActive && fotofirmament.current === self.id)
 				fotofirmament.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity1")
 		}, showLoadingCircleAfterMS)
 	}
@@ -737,6 +724,8 @@ function Photo(id, photo) {
 
 	// smooth scrolling the overview to the preview image
 	self.scrollTo = function(noAnimation) {
+		if (self.preview === undefined)
+			return
 		var rect = self.preview.getBoundingClientRect()
 		var elemTop = rect.top
 		var elemBottom = rect.bottom
@@ -779,6 +768,59 @@ function Photo(id, photo) {
 		if (elemBottom > wh)
 			scrollLoop(elemBottom - wh + scrollOvershoot)
 	}
+	
+	
+	
+	
+	// ---- PHOTO MAIN
+	self.id = id
+	// {name: "22859.jpg", width: "1920", height: "1280", make: "Canon", model: "Canon EOS 400D DIGITAL"
+	// , exposure: "1/800", aperture: "f/3.2", date: "2013:06:24 20:11:48", focalLength: "50/1", iso: "100"}
+	self.name = photo.name
+	
+	self.width = parseInt(photo.width)
+	self.height = parseInt(photo.height)
+	if (isNaN(self.width) || isNaN(self.height) || self.width <= 0 || self.height <= 0) {
+		console.log("The Photo "+self.name+" reports an invalid width or height.")
+		self.showErrorMessageToUser()
+		// try to be robust
+		self.width = 300
+		self.height = 200
+	}
+
+	// optional
+	if (photo.make			!== undefined) self.make		= photo.make
+	if (photo.mode			!== undefined) self.model		= photo.model
+	if (photo.exposure		!== undefined) self.exposure	= photo.exposure
+	if (photo.aperture		!== undefined) self.aperture	= photo.aperture
+	if (photo.date			!== undefined) self.date		= photo.date
+	if (photo.focalLength	!== undefined) self.focalLength = photo.focalLength
+	if (photo.iso			!== undefined) self.iso			= photo.iso
+	
+	self.url = pathToPhotos + self.name
+	self.previewUrl = pathToPreviews + self.name
+	self.fillStyle
+	// DOM elements
+	self.preview
+	self.previewScaled
+	self.previewScaledFluid
+	self.full
+	self.fullFluid
+	
+	self.startedLoadingPreview = false
+	self.finishedLoadingFull = false
+	self.fullImage = new Image()
+	self.fullImage.onload = function () {
+		self.finishedLoadingFull = true
+//		console.log("finished loading fullsize image: "+self.id)
+		fotofirmament.triggerPreloading(self.id)
+	}
+	self.fullImage.onerror = function() {
+		fotofirmament.showErrorMessageToUser()
+		console.log("Error loading image: "+self.url)
+	}
+	
+	self.setupPreview()
 }
 
 
@@ -831,16 +873,18 @@ if (self.overviewIsActive) {
 	self.current = 0
 	self.showOverview()
 } else {
+	// load the preview before loading the fullsize image
+	self.photos[self.current].loadPreview()
 	self.photos[self.current].show()
 	// hide before starting to load, to load in the background
 	self.hideOverview()
 }
 
-// TODO load previews in a more intelligent on-demand-way
-// -> calulate which previews are actually visible (depends on page position, how many fit into horizontal, body width and preview aspect)
-// -> changes with selected image, page scroll, window resize, zoom in/out
-for (var i=0; i<self.photos.length; i++)
-	self.photos[i].loadPreview()
+// the central idea is to NOT load all previews at once
+// that allows us to interweave fullsize image loads into the loading chain on demand
+// otherwise, requests for fullscreen image loads would have to wait for all previews to finish loading first
+for (var i=1; i<numberOfPreviewsToLoadInParallel; i++)
+	self.startLoadingNextPreview()
 self.photos[self.current].scrollTo("noAnimation")
 
 window.onresize = function(event) {

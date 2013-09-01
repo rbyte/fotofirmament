@@ -1,8 +1,7 @@
 
-optimise for huge galeries -> paged/ondemand preview loading
+ondemand/dynamic preview loading (triggered by scroll)
 show Exif info
-when the overview is still loading, and an image is opened to fullsize, it cannot be closed by mouse until loading ended
-when the previews are still loading, they block fullsize loading (set up priority queue?)
+a fullsize image can not be closed by mouse if its loading has not begun (dont know why)
 improve cross-browser compatibility (ie?)
 NoScript version (via PHP)
 add custom text feature for photos
