@@ -47,8 +47,8 @@ var transitionLengthPlusMargin = transitionLength + 70
 var showLoadingCircleAfterMS = transitionLength + 200
 var timeToWaitUntilInterfaceElementsAreHiddenInSingleImageMode = 2000
 var timeBetweenScrollingSteps = 10
-var totalScrollingTime = 40 * timeBetweenScrollingSteps
-var scrollOvershoot = 100 // px
+var totalScrollingTime = 20 * timeBetweenScrollingSteps
+var scrollOvershoot = 90 // px
 // input and output are in [0,1]
 // approximates ease-in-out
 var scrollTransitionFunction = function(x) { return ( (Math.atan((x*2-1)*Math.PI/2)+1)/2 ) }
