@@ -66,6 +66,10 @@ include_once "locale.php";
 	<img id="previous" class="opacity0 noClick" src="vector/next111.svg" onclick="fotofirmament.previous()">
 	<img id="loadingCircle" class="opacity0" src="vector/loadingCircle_040.svg">
 	
+	<div id="date" class="opacity0"></div>
+	
+	<div id="exif" class="opacity0"><span id="exposure"></span><span id="aperture"></span><span id="iso"></span><span id="focalLength"></span></div>
+	
 	<footer id="footer" class="opacity0">
 		<div>
 			<strong><?php echo _("Copyright:"); ?></strong>

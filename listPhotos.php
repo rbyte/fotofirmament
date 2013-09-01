@@ -24,7 +24,9 @@ while ($name = readdir($handle)) {
 			,(array_key_exists('Model', $exif_ifd0) ? ', model: "'.$exif_ifd0['Model'].'"' : '')
 			,(array_key_exists('ExposureTime', $exif_ifd0) ? ', exposure: "'.$exif_ifd0['ExposureTime'].'"' : '')
 			,(array_key_exists('ApertureFNumber', $exif_ifd0['COMPUTED']) ? ', aperture: "'.$exif_ifd0['COMPUTED']['ApertureFNumber'].'"' : '')
-			,(array_key_exists('DateTime', $exif_ifd0) ? ', date: "'.$exif_ifd0['DateTime'].'"' : '')
+			,(array_key_exists('DateTimeOriginal', $exif_ifd0) ? ', date: "'.$exif_ifd0['DateTimeOriginal'].'"' : '')
+			// this is the file date
+//			,(array_key_exists('DateTime', $exif_ifd0) ? ', date: "'.$exif_ifd0['DateTime'].'"' : '')
 			,(array_key_exists('FocalLength', $exif_exif) ? ', focalLength: "'.$exif_exif['FocalLength'].'"' : '')
 			,(array_key_exists('ISOSpeedRatings', $exif_exif) ? ', iso: "'.$exif_exif['ISOSpeedRatings'].'"' : '')
 		."}\n";

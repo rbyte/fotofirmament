@@ -30,6 +30,7 @@ fotofirmament = this
 
 // use the fullsize image for transition. slows transition smoothness (fps), but may look better.
 var useFullForAnimation = false
+var showMetaInfoForPhotos = true
 var defaultFullsizeImageSize = 91 // % of browser width or height, whichever is closer
 var defaultFullscreenFullsizeImageSize = 100
 var spaceBetweenPreviewsInPercentOfHorizontal = 0.2
@@ -161,8 +162,8 @@ self.switchOpenClosePhoto = function(id) {
 	self.updateURL()
 }
 
-self.triggerPreloading = function(photoId) {
-	if (photoId === self.current) {
+self.triggerPreloading = function(photo) {
+	if (self.isCurrent(photo)) {
 		self.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity0")
 		if (self.current+1 < self.photos.length)
 			self.photos[self.current+1].loadFullsize()
@@ -342,8 +343,7 @@ self.showOverview = function() {
 	var ruleStyle = self.getCustomStyleCSSRule()
 	ruleStyle.opacity = 1
 	self.hideChangeImageButton()
-	self.addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
-	self.addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity1")
+	self.addOrReplaceClassAttr(["menu", "title", "footer"], /opacity[^ ]*/, "opacity1")
 	
 	// if we dont wait, the overview will be visible right away, without the transition
 	window.setTimeout(function () {
@@ -354,11 +354,13 @@ self.showOverview = function() {
 self.hideChangeImageButton = function() {
 	self.addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity0")
 	self.addOrReplaceClassAttr(["next", "previous"], "noClick")
+	self.addOrReplaceClassAttr(["exif", "date"], /opacity[^ ]*/, "opacity0")
 }
 
 self.showChangeImageButton = function() {
 	self.addOrReplaceClassAttr(["next", "previous"], /opacity[^ ]*/, "opacity_CIB")
 	self.removeClassAttr(["next", "previous"], "noClick")
+	self.addOrReplaceClassAttr(["exif", "date"], /opacity[^ ]*/, "opacity1")
 }
 
 // after mouse rested a while
@@ -373,7 +375,7 @@ self.hideInterfaceElements = function() {
 
 self.showInterfaceElements = function() {
 	self.showChangeImageButton()
-	self.addOrReplaceClassAttr("menu", /opacity[^ ]*/, "opacity1")
+	self.addOrReplaceClassAttr(["menu", "exif", "date"], /opacity[^ ]*/, "opacity1")
 	var currentFullFluid = self.photos[self.current].fullFluid
 	if (currentFullFluid) if (currentFullFluid.parentNode)
 		self.removeClassAttr(currentFullFluid.parentNode, "hideCursor")
@@ -396,9 +398,11 @@ self.runTimerForHidingInterfaceElements = function() {
 }
 
 self.getPhotoIdFromElem = function(elem) {
-	var id = parseInt(elem.getAttribute("idPhoto"))
-	console.assert(!isNaN(id) && id >= 0 && id < self.photos.length)
-	return id
+	var name = elem.getAttribute("photoName")
+	for (var i=0; i<self.photos.length; i++)
+		if (self.photos[i].name === name)
+			return i
+	console.assert(false)
 }
 
 self.clickedPreview = function(thisElement) {
@@ -438,8 +442,6 @@ self.requestFullscreen = function() {
 
 self.cancelFullscreen = function() {
 	self.removeClassAttr(document.body, "hideScrollbar") // show scrollbar again
-//	if (!self.overviewIsActive)
-//		self.showChangeImageButton()
 	self.fullsizeImageSize = defaultFullsizeImageSize
 	self.updateFillStyleOfCurrent()
 
@@ -459,6 +461,10 @@ self.showErrorMessageToUser = function(message) {
 
 self.hideErrorMessages = function() {
 	self.addOrReplaceClassAttr("errorMessages", "hidden")
+}
+
+self.isCurrent = function(photo) {
+	return self.photos[self.current] === photo
 }
 
 self.key_w = function() { self.up() }
@@ -490,13 +496,13 @@ self.key_esc = function() { self.escape() }
 
 
 
-function Photo(id, photo) {
+function Photo(photo) {
 	var self = this
 
 	// ---- METHOD DEFINITIONS
 	self.setupPreview = function() {
 		var frameDiv = document.createElement("div")
-		frameDiv.setAttribute("id", "preview"+self.id)
+		frameDiv.setAttribute("id", "previewFrame_"+self.name)
 		frameDiv.setAttribute("class", "imgContainerDiv custom")
 		document.getElementById("overviewFrame").appendChild(frameDiv)
 
@@ -505,22 +511,41 @@ function Photo(id, photo) {
 		frameDiv.appendChild(span)
 
 		self.preview = document.createElement("img")
-		self.preview.setAttribute("id", self.id)
-		self.preview.setAttribute("idPhoto", self.id)
+		self.preview.setAttribute("id", "preview_"+self.name)
+		self.preview.setAttribute("photoName", self.name)
 		self.preview.setAttribute("class", "previewPic opacity0")
 		self.preview.setAttribute("onclick", "fotofirmament.clickedPreview(this)")
 	//		self.preview.setAttribute("onmouseover", "mouseoverPreview(this)")
 		frameDiv.appendChild(self.preview)
 		self.preview.addEventListener('load', function () {
-//			console.log("done to load preview: "+self.id)
 			fotofirmament.addOrReplaceClassAttr(self.preview, /opacity[^ ]*/, "opacity1")
 			fotofirmament.startLoadingNextPreview()
 		}, true)
 	}
-	
+
+	self.newFrame = function(name, frameClass, picClass, style, src) {
+		var frameDiv = document.createElement("div")
+		frameDiv.setAttribute("id", "picFrame_" + name + self.name)
+		frameDiv.setAttribute("class", frameClass)
+		document.body.appendChild(frameDiv)
+
+		var span = document.createElement("span")
+		span.setAttribute("class", "helperSpanToAlignImageVertically")
+		frameDiv.appendChild(span)
+
+		var pic = document.createElement("img")
+		pic.setAttribute("id", name + self.name)
+		pic.setAttribute("photoName", self.name)
+		pic.setAttribute("class", picClass)
+		pic.setAttribute("style", style)
+		pic.setAttribute("onclick", "fotofirmament.clickedClose(this)")
+		pic.setAttribute("src", src)
+		frameDiv.appendChild(pic)
+		return pic
+	}
+
 	self.loadPreview = function() {
 		if (!self.startedLoadingPreview) {
-//			console.log("starting to load preview: "+self.id)
 			self.startedLoadingPreview = true
 			self.preview.setAttribute("src", self.previewUrl)
 		}
@@ -531,31 +556,8 @@ function Photo(id, photo) {
 			self.fullImage.src = self.url
 		} else {
 			// for triggering further preloading
-			fotofirmament.triggerPreloading(self.id)
+			fotofirmament.triggerPreloading(self)
 		}
-	}
-
-	self.newFrame = function(name, frameClass, picClass, style, src) {
-		var frameDiv = document.createElement("div")
-		frameDiv.setAttribute("id", "picFrame_"+name+self.id)
-//		frameDiv.setAttribute("idPhoto", self.id)
-//		frameDiv.setAttribute("onclick", "fotofirmament.clickedClose(this)")
-		frameDiv.setAttribute("class", frameClass)
-		document.body.appendChild(frameDiv)
-
-		var span = document.createElement("span")
-		span.setAttribute("class", "helperSpanToAlignImageVertically")
-		frameDiv.appendChild(span)
-
-		var pic = document.createElement("img")
-		pic.setAttribute("id", name+self.id)
-		pic.setAttribute("idPhoto", self.id)
-		pic.setAttribute("class", picClass)
-		pic.setAttribute("style", style)
-		pic.setAttribute("onclick", "fotofirmament.clickedClose(this)")
-		pic.setAttribute("src", src)
-		frameDiv.appendChild(pic)
-		return pic
 	}
 
 	// keyframes for transitioning a preview (in overview mode) to its fullsize
@@ -613,7 +615,8 @@ function Photo(id, photo) {
 		}, cssUpdateMargin)
 
 		window.setTimeout(function () {
-			if (!fotofirmament.overviewIsActive && self.id === fotofirmament.current) {
+			fotofirmament.isCurrent(self)
+			if (!fotofirmament.overviewIsActive && fotofirmament.isCurrent(self)) {
 				self.previewScaledFluid = self.newFrame("previewScaledFluid", "frame z2", "rawImage z2 imageBGnShadow opacity1", "", self.previewUrl)
 				self.fullFluid = self.newFrame("fullFluid", "frame z3"+(fotofirmament.interfaceElementsAreHidden ? " hideCursor" : "")
 					, "rawImage z3 opacity1", "", self.url)
@@ -622,7 +625,7 @@ function Photo(id, photo) {
 			}
 		}, transitionLengthPlusMargin)
 
-		self.showLoadingCircleIfNotFinishedLoadingAfterInterval()
+		self.showCommon()
 	}
 
 	self.removeOpenTransitionArtifacts = function() {
@@ -657,13 +660,15 @@ function Photo(id, photo) {
 			self.removeOpenTransitionArtifacts()
 			fotofirmament.addOrReplaceClassAttr(self.preview, "visited")
 			// disabled. I only want to see the isCurrent markup if I used keys (not the mouse)
-			if (false) if (fotofirmament.overviewIsActive && self.id === fotofirmament.current)
+			if (false) if (fotofirmament.overviewIsActive && fotofirmament.isCurrent(self))
 				fotofirmament.addOrReplaceClassAttr(self.preview, "isCurrent")
 		}, transitionLengthPlusMargin)
 	}
 
 	self.show = function() {
 		self.loadFullsize()
+		self.removeFrameOf(self.previewScaledFluid)
+		self.removeFrameOf(self.fullFluid)
 		self.previewScaledFluid = self.newFrame("previewScaledFluid", "frame z2", "rawImage z0 imageBGnShadow opacity0", "", self.previewUrl)
 		self.fullFluid = self.newFrame("fullFluid", "frame z3"+(fotofirmament.interfaceElementsAreHidden ? " hideCursor" : "")
 			, "rawImage z1 opacity0", "", self.url)
@@ -679,8 +684,26 @@ function Photo(id, photo) {
 			fotofirmament.addOrReplaceClassAttr(self.previewScaledFluid, /z./, "z2")
 			fotofirmament.addOrReplaceClassAttr(self.fullFluid, /z./, "z3")
 		}, transitionLengthPlusMargin)
-
+		
+		self.showCommon()
+	}
+	
+	self.padZero = function(n, p) {
+		var pad = new Array(1 + p).join('0')
+		return (pad + n).slice(-pad.length)
+	}
+	
+	self.showCommon = function() {
 		self.showLoadingCircleIfNotFinishedLoadingAfterInterval()
+		if (showMetaInfoForPhotos) {
+			document.getElementById("exposure").innerHTML = (self.exposure !== undefined) ? self.exposure+"s" : ""
+			document.getElementById("aperture").innerHTML = (self.aperture !== undefined) ? self.aperture : ""
+			document.getElementById("iso").innerHTML = (self.iso !== undefined) ? "ISO "+self.iso : ""
+			document.getElementById("focalLength").innerHTML = (self.focalLength !== undefined) ? self.focalLength+"mm" : ""
+			document.getElementById("date").innerHTML = (self.date !== undefined)
+				? self.date.getFullYear()+"-"+self.padZero(self.date.getMonth() + 1, 2)+"-"+self.padZero(self.date.getDate(), 2)
+				: ""
+		}
 	}
 
 	self.hide = function() {
@@ -693,7 +716,7 @@ function Photo(id, photo) {
 			fotofirmament.addOrReplaceClassAttr(self.fullFluid, /opacity[^ ]*/, "opacity0")
 
 		window.setTimeout(function () {
-			if (self.id !== fotofirmament.current) {
+			if (!fotofirmament.isCurrent(self)) {
 				self.removeFrameOf(self.previewScaledFluid)
 				self.removeFrameOf(self.fullFluid)
 			}
@@ -702,7 +725,7 @@ function Photo(id, photo) {
 
 	self.showLoadingCircleIfNotFinishedLoadingAfterInterval = function() {
 		window.setTimeout(function () {
-			if (!self.finishedLoadingFull && !fotofirmament.overviewIsActive && fotofirmament.current === self.id)
+			if (!self.finishedLoadingFull && !fotofirmament.overviewIsActive && fotofirmament.isCurrent(self))
 				fotofirmament.addOrReplaceClassAttr("loadingCircle", /opacity[^ ]*/, "opacity1")
 		}, showLoadingCircleAfterMS)
 	}
@@ -773,7 +796,6 @@ function Photo(id, photo) {
 	
 	
 	// ---- PHOTO MAIN
-	self.id = id
 	// {name: "22859.jpg", width: "1920", height: "1280", make: "Canon", model: "Canon EOS 400D DIGITAL"
 	// , exposure: "1/800", aperture: "f/3.2", date: "2013:06:24 20:11:48", focalLength: "50/1", iso: "100"}
 	self.name = photo.name
@@ -782,7 +804,7 @@ function Photo(id, photo) {
 	self.height = parseInt(photo.height)
 	if (isNaN(self.width) || isNaN(self.height) || self.width <= 0 || self.height <= 0) {
 		console.log("The Photo "+self.name+" reports an invalid width or height.")
-		self.showErrorMessageToUser()
+		fotofirmament.showErrorMessageToUser()
 		// try to be robust
 		self.width = 300
 		self.height = 200
@@ -793,9 +815,24 @@ function Photo(id, photo) {
 	if (photo.mode			!== undefined) self.model		= photo.model
 	if (photo.exposure		!== undefined) self.exposure	= photo.exposure
 	if (photo.aperture		!== undefined) self.aperture	= photo.aperture
-	if (photo.date			!== undefined) self.date		= photo.date
-	if (photo.focalLength	!== undefined) self.focalLength = photo.focalLength
 	if (photo.iso			!== undefined) self.iso			= photo.iso
+	if (photo.focalLength	!== undefined) {
+		var match = /^(\d*)/.exec(photo.focalLength)
+		if (match !== null)
+			self.focalLength = Number(match[1])
+	}
+	if (photo.date			!== undefined) {
+		var match = /^(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/.exec(photo.date)
+		if (match !== null)
+			self.date = new Date(
+				Number(match[1]),
+				Number(match[2]) - 1,
+				Number(match[3]),
+				Number(match[4]),
+				Number(match[5]),
+				Number(match[6])
+			)
+	}
 	
 	self.url = pathToPhotos + self.name
 	self.previewUrl = pathToPreviews + self.name
@@ -812,15 +849,12 @@ function Photo(id, photo) {
 	self.fullImage = new Image()
 	self.fullImage.onload = function () {
 		self.finishedLoadingFull = true
-//		console.log("finished loading fullsize image: "+self.id)
-		fotofirmament.triggerPreloading(self.id)
+		fotofirmament.triggerPreloading(self)
 	}
 	self.fullImage.onerror = function() {
 		fotofirmament.showErrorMessageToUser()
 		console.log("Error loading image: "+self.url)
 	}
-	
-	self.setupPreview()
 }
 
 
@@ -856,14 +890,23 @@ if (navigator.appName === "Microsoft Internet Explorer")
 
 // sort photos by name
 // TODO use exif date instead, if existing
-photos.sort(function(a,b) { return -(a.name.localeCompare(b.name)) })
 // photos and self.photos are very different things
 self.photos = new Array(photos.length)
 for (var i=0; i<photos.length; i++)
-	self.photos[i] = new Photo(i, photos[i])
+	self.photos[i] = new Photo(photos[i])
+
+// sort by exif date. if not available, fall back to comparing by name.
+self.photos.sort(function(a,b) {
+	return (a.date !== undefined && b.date !== undefined)
+		? a.date < b.date
+		: -(a.name.localeCompare(b.name))
+})
 
 self.setHowManyPreviewsShouldFitIntoHorizontal()
 self.setPreviewSize()
+
+for (var i=0; i<self.photos.length; i++)
+	self.photos[i].setupPreview()
 // currently selected photo
 self.current = self.getCurrentIdFromUrl()
 self.overviewIsActive = self.current === -1
