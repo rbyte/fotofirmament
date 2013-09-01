@@ -19,6 +19,7 @@ This is my own customised instance of the fotofirmament.
 * zoom for overview and pictures
 * supports direct linking to pictures
 * fullscreen capable
+* support showing EXIF data
 * keyboard-only usage possible
 * localisation support (only german is currently set up)
 * lightweight
@@ -53,7 +54,7 @@ Operators:
 ####Customisation:
 * *config.php*: Set the paths to your pictures and previews.
 * *index.php*: Set a title, header (a predefined one can be uncommented), footer and more.
-A little more advanced:
+<br/>A little more advanced:
 * *css/custom.css*: Make style adjustments (for your title, footer, ...).
 * *js/fotofirmament.js*: Constants are defined right at the top. 
 * *locale/*: Translate your page.

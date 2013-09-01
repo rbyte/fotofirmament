@@ -219,6 +219,27 @@ noscript, #errorMessages {
 	0% {	transform: rotate(0deg); }
 	100% {	transform: rotate(360deg); }
 }
+#exif, #date {
+	position: fixed;
+	bottom: 0;
+	padding: 10px 20px;
+	font-family: sans-serif;
+	font-weight: 100;
+	font-size: 100%;
+    color: #565656;
+	text-shadow: 0px 1px 0 rgba(0, 0, 0, 0.2); /* horizontal, vertical, blur, color */
+	z-index: 2;
+	transition: opacity 300ms ease-in-out, color 300ms ease-in-out;
+}
+#exif {
+	right: 0;
+}
+#date {
+	left: 0;
+}
+#exif span {
+	margin: 0 10px;
+}
 #previous, #next {
 	position: fixed;
 	cursor: pointer;
