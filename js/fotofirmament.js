@@ -897,9 +897,10 @@ for (var i=0; i<photos.length; i++)
 
 // sort by exif date. if not available, fall back to comparing by name.
 self.photos.sort(function(a,b) {
-	return (a.date !== undefined && b.date !== undefined)
-		? a.date < b.date
+	return ((a.date !== undefined && b.date !== undefined)
+		? (a.date < b.date ? 1 : -1)
 		: -(a.name.localeCompare(b.name))
+	)
 })
 
 self.setHowManyPreviewsShouldFitIntoHorizontal()
