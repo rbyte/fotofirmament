@@ -7,7 +7,7 @@ body {
 	/* Credit: Stephen Gilbert, http://subtlepatterns.com/textured-paper/ */
 	background-image: url("../images/textured_paper_3.png");
 	background-color: #444; /* 64/255 ~= 4/16 */
-	transition: background-color 400ms ease-in-out;
+	/*transition: background-color 400ms ease-in-out;*/
 }
 *:-webkit-full-screen {
 	 /* transparent. counters white background in fullscreen mode in chrome */
@@ -174,6 +174,11 @@ last line of previews in not aligned */
 	/*transition: all 400ms ease-in-out;*/
 	/*background-color: #fcc;*/
 }
+.imgContainerDivNoscriptDefault {
+	width: 300px;
+	height: 200px;
+	margin: 30px;
+}
 .movingImage {
 	position: fixed;
 	border-radius: 2px;
@@ -186,16 +191,19 @@ last line of previews in not aligned */
 /*	box-shadow: 0px 7px 20px 3px rgba(0,0,0,0.2); */
 	background-color: rgba(0, 0, 0, 0.3);
 }
-noscript, #errorMessages {
-	position: fixed;
+#noscriptWarning, #errorMessages {
 	width: 100%;
 	background-color: #800;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
 	color: #fff;
-	padding: 5px;
+	padding: 5px 0;
 	font-size: 20px;
 	text-align: center;
 	z-index: 6;
+}
+#errorMessages {
+	position: fixed;
+	top: 0;
 	cursor: pointer;
 }
 #loadingCircle {

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fotofirmament\n"
-"POT-Creation-Date: 2013-08-23 13:42+0100\n"
-"PO-Revision-Date: 2013-08-23 13:43+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2013-09-02 20:49+0100\n"
+"PO-Revision-Date: 2013-09-02 20:50+0100\n"
+"Last-Translator: matmax\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -125,6 +125,10 @@ msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
 #: /var/www/html/webDevSandbox/fotofirmament/index.php:80
 msgid "Gallery software used:"
 msgstr "Betrieben am:"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:28
+msgid "Enable Javascript to use all features."
+msgstr "Aktiviere Javascript, um alle Funktionen nutzen zu können."
 
 #~ msgid "fotofirmament showcase gallery"
 #~ msgstr "fotofirmament Beispielgalerie"

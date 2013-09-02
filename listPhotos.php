@@ -5,6 +5,7 @@ $verz = dirname($_SERVER['SCRIPT_FILENAME'])."/".$pathToPhotos;
 chdir($verz);
 $handle = opendir($verz);
 $i = 0;
+$photoNames = array();
 echo "photos = [\n";
 while ($name = readdir($handle)) {
 	if (is_file($name) && preg_match("/\.(jpe?g|jp2|png|tiff?|gif|svgz?|webp)$/", $name)) {
@@ -15,7 +16,7 @@ while ($name = readdir($handle)) {
 			echo ",";
 		$exif_ifd0 = read_exif_data($name, 'IFD0', 0);      
 		$exif_exif = read_exif_data($name, 'EXIF', 0);
-
+		$photoNames[] = $name;
 		// {name: "22859.jpg", width: "1920", height: "1280", make: "Canon", model: "Canon EOS 400D DIGITAL", exposure: "1/800", aperture: "f/3.2", date: "2013:06:24 20:11:48", focalLength: "50/1", iso: "100"}
 		echo '{name: "'.$name.'"'
 			.', width: "'.$size[0].'"'
