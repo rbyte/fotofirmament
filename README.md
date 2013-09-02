@@ -19,7 +19,8 @@ This is my own customised instance of the fotofirmament.
 * zoom for overview and pictures
 * supports direct linking to pictures
 * fullscreen capable
-* support showing EXIF data
+* supports showing EXIF data
+* does not require javascript for minimal functionality
 * keyboard-only usage possible
 * localisation support (only german is currently set up)
 * lightweight
