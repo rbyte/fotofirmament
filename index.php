@@ -17,10 +17,22 @@ include_once "locale.php";
 </head>
 
 <body onload="interfaceInit()">
-	<noscript><?php echo _("This site requires JavaScript."); ?></noscript>
-	<div id="errorMessages" class="hidden" onclick="fotofirmament.hideErrorMessages()"></div>
+	<noscript>
+		<style>
+			#footer, #title { opacity: 1 !important; }
+			#menu, #next, #previous, #loadingCircle { display: none !important; }
+		</style>
+	</noscript>
 	
-	<div id="menu" class="opacity1">
+	<div id="errorMessages" class="hidden" onclick="fotofirmament.hideErrorMessages()"></div>
+	<noscript><div id="noscriptWarning"><?php echo _("Enable Javascript to use all features."); ?></div></noscript>
+	
+	<header id="title" class="opacity0">
+		<!-- to be defined -->
+		<div class="logoInTitle"><?php echo _("fotofirmament showcase gallery"); ?></div>
+	</header>
+	
+	<div id="menu" class="opacity0">
 	<ul>
 		<li><span class="symbol">g</span><!-- gear icon -->
 			<ul>
@@ -38,12 +50,16 @@ include_once "locale.php";
 	</ul>
 	</div>
 	
-	<header id="title" class="opacity0">
-		<!-- to be defined -->
-<!--		<div class="logoInTitle"><?php echo _("fotofirmament showcase gallery"); ?></div>-->
-	</header>
-	
-	<div id="overviewFrame"></div>
+	<div id="overviewFrame">
+		<noscript>
+			<?php 
+				foreach ($photoNames as $name) {
+					echo '<div class="imgContainerDiv imgContainerDivNoscriptDefault"><a href="'.$pathToPhotos.$name.'">';
+					echo '<span class="helperSpanToAlignImageVertically"></span><img class="previewPic" src="'.$pathToPreviews.$name.'"></a></div>';
+				}
+			?>
+		</noscript>
+	</div>
 	
 	<img id="next" class="opacity0 noClick" src="vector/next111.svg" onclick="fotofirmament.next()">
 	<img id="previous" class="opacity0 noClick" src="vector/next111.svg" onclick="fotofirmament.previous()">
@@ -59,6 +75,5 @@ include_once "locale.php";
 			<a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg"></a>
 		</div>
 	</footer>
-	
 </body>
 </html>

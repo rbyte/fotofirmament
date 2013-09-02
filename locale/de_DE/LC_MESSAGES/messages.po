@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fotofirmament\n"
-"POT-Creation-Date: 2013-08-22 16:26+0100\n"
-"PO-Revision-Date: 2013-08-22 16:26+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2013-09-02 20:49+0100\n"
+"PO-Revision-Date: 2013-09-02 20:50+0100\n"
+"Last-Translator: matmax\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -14,65 +14,63 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: /var/www/html/webDevSandbox/fotofirmament\n"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:58
-msgid "This site requires JavaScript."
-msgstr "Diese Seite benötigt JavaScript."
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:28
+msgid "Enable Javascript to use all features."
+msgstr "Aktiviere Javascript, um alle Funktionen nutzen zu können."
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:66
-msgid "up"
-msgstr "nach oben"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:68
-msgid "down"
-msgstr "nach unten"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:70
-msgid "previous"
-msgstr "voriges"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:72
-msgid "next"
-msgstr "nächstes"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:74
-msgid "single image mode"
-msgstr "Einzelbildmodus"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:76
-msgid "fullscreen mode"
-msgstr "Vollbildmodus"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:78
-msgid "zoom in"
-msgstr "vergrößern"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:80
-msgid "zoom out"
-msgstr "verkleinern"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:88
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:32
 msgid "fotofirmament showcase gallery"
 msgstr "fotofirmament Beispielgalerie"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:100
-msgid "Copyright:"
-msgstr "Urheber:"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:39
+msgid "up"
+msgstr "nach oben"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:103
-msgid "Contact:"
-msgstr "Kontakt:"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:40
+msgid "down"
+msgstr "nach unten"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:107
-msgid "Photo license:"
-msgstr "Foto Lizenz:"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:41
+msgid "previous"
+msgstr "voriges"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:108
-msgid "http://creativecommons.org/licenses/by-nc-sa/3.0/"
-msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:42
+msgid "next"
+msgstr "nächstes"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:111
-msgid "Gallery software used:"
-msgstr "Betrieben am:"
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:43
+msgid "single image mode"
+msgstr "Einzelbildmodus"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:44
+msgid "fullscreen mode"
+msgstr "Vollbildmodus"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:45
+msgid "zoom in"
+msgstr "vergrößern"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:46
+msgid "zoom out"
+msgstr "verkleinern"
+
+#~ msgid "This site requires JavaScript."
+#~ msgstr "Diese Seite benötigt JavaScript."
+
+#~ msgid "Copyright:"
+#~ msgstr "Urheber:"
+
+#~ msgid "Contact:"
+#~ msgstr "Kontakt:"
+
+#~ msgid "Photo license:"
+#~ msgstr "Foto Lizenz:"
+
+#~ msgid "http://creativecommons.org/licenses/by-nc-sa/3.0/"
+#~ msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
+
+#~ msgid "Gallery software used:"
+#~ msgstr "Betrieben am:"
 
 #~ msgid "Your Magnificent Title"
 #~ msgstr "Deine großartige Überschrift"
