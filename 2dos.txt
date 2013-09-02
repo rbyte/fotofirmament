@@ -1,15 +1,14 @@
 
 add custom text feature for photos
+PHP auto image preview generation
 ondemand/dynamic preview loading (triggered by scroll)
 a fullsize image can not be closed by mouse if its loading has not begun (dont know why)
 improve cross-browser compatibility (ie?)
 stick footer to page bottom (even if the page is not filled)
-PHP auto image preview generation
 next and previous buttons: hide when at first or last photo
 further localisation (es, fr, ru, ...)
 add language selection menu
 optimise for printing
 download all function
-improved NoScript version
-optional captcha protection (?)
 maybe try a prototypal implementation of Photo
+
