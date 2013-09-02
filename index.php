@@ -21,6 +21,7 @@ include_once "locale.php";
 		<style>
 			#footer, #title { opacity: 1 !important; }
 			#menu, #next, #previous, #loadingCircle { display: none !important; }
+			#title:hover { max-height: 4000px !important; }
 		</style>
 	</noscript>
 	

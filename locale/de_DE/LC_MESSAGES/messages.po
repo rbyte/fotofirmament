@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fotofirmament\n"
-"POT-Creation-Date: 2013-09-02 20:49+0100\n"
-"PO-Revision-Date: 2013-09-02 20:50+0100\n"
+"POT-Creation-Date: 2013-09-02 21:02+0100\n"
+"PO-Revision-Date: 2013-09-02 21:02+0100\n"
 "Last-Translator: matmax\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,47 +14,15 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: /var/www/html/webDevSandbox/fotofirmament\n"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:20
-msgid "This site requires JavaScript."
-msgstr "Diese Seite benötigt JavaScript."
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:27
-msgid "up"
-msgstr "nach oben"
-
 #: /var/www/html/webDevSandbox/fotofirmament/index.php:28
-msgid "down"
-msgstr "nach unten"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:29
-msgid "previous"
-msgstr "voriges"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:30
-msgid "next"
-msgstr "nächstes"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:31
-msgid "single image mode"
-msgstr "Einzelbildmodus"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:32
-msgid "fullscreen mode"
-msgstr "Vollbildmodus"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:33
-msgid "zoom in"
-msgstr "vergrößern"
+msgid "Enable Javascript to use all features."
+msgstr "Aktiviere Javascript, um alle Funktionen nutzen zu können!"
 
 #: /var/www/html/webDevSandbox/fotofirmament/index.php:34
-msgid "zoom out"
-msgstr "verkleinern"
-
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:46
 msgid "Welcome!"
 msgstr "Willkommen!"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:48
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:36
 msgid ""
 "Here you will find some of my finest photos. The latest are at the top, the "
 "oldest were shot in 2007. In this year, after my final school exams (Abitur) "
@@ -71,7 +39,7 @@ msgstr ""
 "Bildschirmaufnahmen und Panoramen von so mancher bezaubernden Spielewelt "
 "geschossen habe."
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:50
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:38
 msgid ""
 "Picture can carry a feeling, a state of mind. Many of the photos presented "
 "here do link to a thought of mine, that I embraced. The selection shown here "
@@ -84,7 +52,7 @@ msgstr ""
 "ein Foto dafür qualifiziert, in dieser Galerie zu sein. Ich möchte jeden "
 "Besucher ermuntern, seine eigene Deutung in den Bildern zu suchen."
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:52
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:40
 msgid ""
 "I would like to dearly thank all the people that went with me part of the "
 "way and encouraged me to take it further. Thank you for your appreciation, "
@@ -94,7 +62,7 @@ msgstr ""
 "und bestärkt haben, sei es durch ihre Anerkennung, Hinweise, Kritik oder "
 "Unterstützung."
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:54
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:42
 msgid ""
 "I currently live in Magdeburg, where I am studying computer science. Feel "
 "free to contact me via Email: "
@@ -102,33 +70,64 @@ msgstr ""
 "Ich lebe übrigens derzeit in Magdeburg, wo ich Informatik studiere. "
 "Kontaktieren kannst du mich jederzeit gern via Email: "
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:56
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:47
 msgid "Have fun exploring the gallery!"
 msgstr "Viel Spaß beim stöbern!"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:69
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:56
+msgid "up"
+msgstr "nach oben"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:57
+msgid "down"
+msgstr "nach unten"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:58
+msgid "previous"
+msgstr "voriges"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:59
+msgid "next"
+msgstr "nächstes"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:60
+msgid "single image mode"
+msgstr "Einzelbildmodus"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:61
+msgid "fullscreen mode"
+msgstr "Vollbildmodus"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:62
+msgid "zoom in"
+msgstr "vergrößern"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:63
+msgid "zoom out"
+msgstr "verkleinern"
+
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:91
 msgid "Copyright:"
 msgstr "Urheber:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:72
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:94
 msgid "Contact:"
 msgstr "Kontakt:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:76
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:98
 msgid "Photo license:"
 msgstr "Foto Lizenz:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:77
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:99
 msgid "http://creativecommons.org/licenses/by-nc-sa/3.0/"
 msgstr "http://creativecommons.org/licenses/by-nc-sa/3.0/de/"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:80
+#: /var/www/html/webDevSandbox/fotofirmament/index.php:102
 msgid "Gallery software used:"
 msgstr "Betrieben am:"
 
-#: /var/www/html/webDevSandbox/fotofirmament/index.php:28
-msgid "Enable Javascript to use all features."
-msgstr "Aktiviere Javascript, um alle Funktionen nutzen zu können."
+#~ msgid "This site requires JavaScript."
+#~ msgstr "Diese Seite benötigt JavaScript."
 
 #~ msgid "fotofirmament showcase gallery"
 #~ msgstr "fotofirmament Beispielgalerie"
