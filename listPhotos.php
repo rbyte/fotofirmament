@@ -37,4 +37,5 @@ while ($name = readdir($handle)) {
 echo "]\n";
 closedir($handle);
 sort($photoNames);
+array_reverse($photoNames);
 ?>
