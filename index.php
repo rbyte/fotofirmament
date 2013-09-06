@@ -97,7 +97,7 @@ include_once "locale.php";
 		</div>
 		<div>
 			<strong><?php echo _("Photo license:"); ?></strong>
-			<br/><a href="<?php echo _("http://creativecommons.org/licenses/by-nc-sa/3.0/"); ?>"><img id="ccLogo" src="fotograf/by-nc-sa_eu.svg"></a>
+			<br/><a href="<?php echo _("http://creativecommons.org/licenses/by-nc-sa/3.0/"); ?>"><img id="ccLogo" src="fotograf/by-nc-sa_eu_mod2.svg"></a>
 		</div>
 		<div>
 			<strong><?php echo _("Gallery software used:"); ?></strong>
