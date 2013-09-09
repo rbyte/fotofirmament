@@ -72,7 +72,7 @@ include_once "locale.php";
 	<footer id="footer" class="opacity0">
 		<!-- to be defined -->
 		<div><!-- please keep a link to the source -->
-			<a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg"></a>
+			<a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg" alt="fotofirmament"></a>
 		</div>
 	</footer>
 </body>
