@@ -101,7 +101,7 @@ include_once "locale.php";
 		</div>
 		<div>
 			<strong><?php echo _("Gallery software used:"); ?></strong>
-			<br/><a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg"></a>
+			<br/><a href="https://github.com/rbyte/fotofirmament"><img id="fotofirmamentLogo" src="vector/fotofirmament_033.svg" alt="fotofirmament"></a>
 		</div>
 	</footer>
 </body>
