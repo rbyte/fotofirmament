@@ -31,26 +31,24 @@ This is my own customised instance of the fotofirmament.
 * simple setup
 
 ####Setup:
-* clone this repository
+* clone this repository onto your webserver
 * open ./index.php in your webbrowser
   * you should see the sample images
-* place all your images inside ./images/photosFullsize/
-* place all your preview-images (with the same name) inside ./images/photosPreviews/
-* remove the sample images inside those folders
+* place all your images inside ./images/photosFullsize/ and remove the sample images
 * reload the page and see your images appear!
-
-If you do not have a webserver set up, you can also open ./index_evaluatedExample.htm in your browser. This will allow you to test it locally. However, this is static, so no new images will be loaded.
+  * if you did not place your own previews in ./images/photosPreviews/, they are auto-generated, which may take a while
 
 ####Requirements:
-Users: just a modern, W3C-compliant HTML5-capable webbrowser
+just a good webbrowser
 * Mozilla Firefox >=23 works reliably
 * Chromium >=27 works reliably (so webkit-based browsers will, I suppose)
 * Microsoft Internet Explorer 10 *does not work*
 * I have not tested any other browsers yet.
 
-Operators:
-* a webserver with php support
-* GNU gettext support for localisation
+and a good webserver
+* with php support
+* php GD for automatic preview generation
+* php gettext support for localisation
 
 ####Customisation:
 * *config.php*: Set the paths to your pictures and previews.
