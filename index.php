@@ -33,7 +33,7 @@ include_once "locale.php";
 		<div class="hr"></div>
 		<div class="info">
 			<h3><?php echo _("Welcome!"); ?></h3>
-			<img src="<?php echo $pathToPreviews; ?>27306.jpg"/>
+			<img src="fotograf/38605.jpg"/>
 			<p><?php echo _("Here you will find some of my finest photos. The latest are at the top, the oldest were shot in 2007. In this year, after my final school exams (Abitur) I got my first digital camera as a present. Photography has since then become dear to my heart. But my love towards digital pictures developed even earlier, during the time I played computer games. I used to capture screenshots and panoramas of one or the other enchanting gaming world."); ?>
 			</p>
 			<p><?php echo _("Picture can carry a feeling, a state of mind. Many of the photos presented here do link to a thought of mine, that I embraced. The selection shown here is therefore not only based on aesthetics. I would like to encourage every visitor to search his own meaning in these pictures."); ?>
