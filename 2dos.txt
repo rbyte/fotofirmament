@@ -1,4 +1,7 @@
 
+
+hitting whitespace for switching
+clicking the background in single image mode returns you to overview
 add custom text feature for photos
 ondemand/dynamic preview loading (triggered by scroll)
 a fullsize image can not be closed by mouse if its loading has not begun (dont know why)
