@@ -527,18 +527,18 @@ function Photo(photo) {
 		var frameDiv = document.createElement("div")
 		frameDiv.setAttribute("id", "picFrame_" + name + self.name)
 		frameDiv.setAttribute("class", frameClass)
+		frameDiv.setAttribute("photoName", self.name)
+		frameDiv.setAttribute("onclick", "fotofirmament.clickedClose(this)")
 		document.body.appendChild(frameDiv)
-
+		
 		var span = document.createElement("span")
 		span.setAttribute("class", "helperSpanToAlignImageVertically")
 		frameDiv.appendChild(span)
 
 		var pic = document.createElement("img")
 		pic.setAttribute("id", name + self.name)
-		pic.setAttribute("photoName", self.name)
 		pic.setAttribute("class", picClass)
 		pic.setAttribute("style", style)
-		pic.setAttribute("onclick", "fotofirmament.clickedClose(this)")
 		pic.setAttribute("src", src)
 		frameDiv.appendChild(pic)
 		return pic

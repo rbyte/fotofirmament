@@ -29,7 +29,7 @@ include_once "locale.php";
 	
 	<header id="title" class="opacity0">
 		<!-- to be defined -->
-		<div class="logoInTitle"><?php echo _("fotofirmament showcase gallery"); ?></div>
+		<!-- <div class="logoInTitle"><?php echo _("fotofirmament showcase gallery"); ?></div>-->
 	</header>
 	
 	<div id="menu" class="opacity0">
