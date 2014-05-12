@@ -4,7 +4,7 @@ fotofirmament webgallery
 A webgallery that places the emphasis on where it belongs: *Your Pictures*.
 
 ####Showcase gallery:
-http://fotograf.eclasca.de/<br/>
+http://fotograf.mgrf.de/<br/>
 This is my own customised instance of the fotofirmament.
 
 ####Key features:
