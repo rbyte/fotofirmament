@@ -238,7 +238,7 @@ self.updateURL = function() {
 		: "overview")
 }
 
-// given with "http://www.bla.de/#nameOfPhoto"
+// given with "http://www.fn.de/#nameOfPhoto"
 self.getCurrentIdFromUrl = function() {
 	var query = window.location.href.split("#")
 	if (query.length > 1)
@@ -279,17 +279,6 @@ self.updateFitIntoHorizontal = function() {
 	}
 }
 
-self.getCustomStyleCSSRule = function() {
-	// I dont want to change the style of very element, so I change the css rules instead..
-	// http://www.quirksmode.org/dom/changess.html
-	var styleIndex = 0
-	var cssRuleCode = document.all ? 'rules' : 'cssRules' //account for IE and FF
-	var ruleIndex = 0 // well, 0 for simplicity reasons. the rule changed has to be put as first in the css!
-	var rule = document.styleSheets[styleIndex][cssRuleCode][ruleIndex]
-	console.assert(rule.selectorText === ".custom")
-	return rule.style
-}
-
 self.setPreviewSize = function() {
 	// the preview frame aspect is the same for all previews, so they form a nice grid
 	// the disadvantage is that a lot of space may be lost between previews
@@ -316,17 +305,18 @@ self.setPreviewSize = function() {
 		/numberOfPreviewsFittingIntoHorizontal
 	var h = w/aspectRatioOfOverviewPreviewFrames
 
-	var ruleStyle = self.getCustomStyleCSSRule()
-	ruleStyle.width = w+"px"
-	ruleStyle.height = h+"px"
-	ruleStyle.margin = margin+"px"
-	ruleStyle.transition = "all "+transitionLength+"ms ease-in-out"
+	for (let e of document.querySelectorAll(".custom")) {
+		e.style.width = w+"px"
+		e.style.height = h+"px"
+		e.style.margin = margin+"px"
+		e.style.transition = "all "+transitionLength+"ms ease-in-out"
+	}
 }
 
 self.hideOverview = function() {
 	self.overviewIsActive = false
-	var ruleStyle = self.getCustomStyleCSSRule()
-	ruleStyle.opacity = 0
+	for (let e of document.querySelectorAll(".custom"))
+		e.style.opacity = 0
 	self.addOrReplaceClassAttr(["title", "footer"], /opacity[^ ]*/, "opacity0")
 	self.runTimerForHidingInterfaceElements()
 
@@ -340,8 +330,8 @@ self.hideOverview = function() {
 self.showOverview = function() {
 	self.interfaceElementsAreHidden = false
 	self.overviewIsActive = true
-	var ruleStyle = self.getCustomStyleCSSRule()
-	ruleStyle.opacity = 1
+	for (let e of document.querySelectorAll(".custom"))
+		e.style.opacity = 1
 	self.hideChangeImageButton()
 	self.addOrReplaceClassAttr(["menu", "title", "footer"], /opacity[^ ]*/, "opacity1")
 	
@@ -904,10 +894,9 @@ self.photos.sort(function(a,b) {
 })
 
 self.setHowManyPreviewsShouldFitIntoHorizontal()
-self.setPreviewSize()
-
 for (var i=0; i<self.photos.length; i++)
 	self.photos[i].setupPreview()
+self.setPreviewSize()
 // currently selected photo
 self.current = self.getCurrentIdFromUrl()
 self.overviewIsActive = self.current === -1
