@@ -3,11 +3,11 @@ fotofirmament webgallery
 
 A webgallery that places the emphasis on where it belongs: *Your Pictures*.
 
-####Showcase gallery:
+#### Showcase gallery:
 http://fotograf.mgrf.de/<br/>
 This is my own customised instance of the fotofirmament.
 
-####Key features:
+#### Key features:
 * calm interface experience through
   * unobtrusive, modest design
   * smooth transitions of UI elements and pictures
@@ -30,7 +30,7 @@ This is my own customised instance of the fotofirmament.
 * free software (AGPLv3)
 * simple setup
 
-####Setup:
+#### Setup:
 * clone this repository onto your webserver
 * open ./index.php in your webbrowser
   * you should see the sample images
@@ -38,7 +38,7 @@ This is my own customised instance of the fotofirmament.
 * reload the page and see your images appear!
   * if you did not place your own previews in ./images/photosPreviews/, they are auto-generated, which may take a while
 
-####Requirements:
+#### Requirements:
 just a good webbrowser
 * Mozilla Firefox >=23 works reliably
 * Chromium >=27 works reliably (so webkit-based browsers will, I suppose)
@@ -50,7 +50,7 @@ and a good webserver
 * php GD for automatic preview generation
 * php gettext support for localisation
 
-####Customisation:
+#### Customisation:
 * *config.php*: Set the paths to your pictures and previews.
 * *index.php*: Set a title, header (a predefined one can be uncommented), footer and more.
 <br/>A little more advanced:
@@ -58,11 +58,11 @@ and a good webserver
 * *js/fotofirmament.js*: Constants are defined right at the top. 
 * *locale/*: Translate your page.
 
-####Contributing:
+#### Contributing:
 Please feel free to contribute to this project!
 I track my own ideas in the 2dos.txt. There may also be TODO-s in the code.
 
-####About:
+#### About:
 Author: Matthias Graf<br/>
 Email: matthias.graf at eclasca.de<br/>
 Licence: AGPLv3
